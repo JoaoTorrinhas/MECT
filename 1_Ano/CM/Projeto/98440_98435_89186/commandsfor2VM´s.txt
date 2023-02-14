@@ -1,0 +1,76 @@
+VM 1, para o Core 5G.
+
+Install Open5GS
+
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:open5gs/latest
+sudo apt update
+sudo apt install open5gs
+-------------
+
+Install mongoDB
+
+sudo apt update
+sudo apt install wget gnupg
+wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+sudo apt update
+sudo apt install -y mongodb-org
+sudo systemctl start mongod (if '/usr/bin/mongod' is not running)
+sudo systemctl enable mongod (ensure to automatically start it on system boot)
+-------------
+
+Nat port fowarding
+
+sudo sysctl -w net.ipv4.ip_forward=1
+sudo iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+sudo systemctl stop ufw
+sudo iptables -I FORWARD 1 -j ACCEPT
+
+# if above setup not works try to manually create tun interface and do nat forwarding
+sudo ip tuntap add name ogstun mode tun
+sudo ip addr add 10.45.0.1/16 dev ogstun
+sudo ip addr add 2001:230:cafe::1/48 dev ogstun
+sudo ip link set ogstun up
+-------------
+
+Install nodejs
+
+sudo apt update
+sudo apt install curl
+curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt install nodejs
+-------------
+
+Clone webui
+
+git clone https://github.com/open5gs/open5gs.git
+-------------
+
+Run webui with npm
+
+cd webui
+npm run dev --host 0.0.0.0
+-------------
+
+# the web interface will start on
+http://localhost:3000
+-------------
+
+
+----------------------------------------------------------------------------------------------------------------
+
+VM2, para o  UERANSIM
+
+
+Install UERANSIM
+
+sudo apt update 
+sudo apt upgrade 
+sudo apt install make g++ libsctp-dev lksctp-tools 
+iproute2 sudo snap install cmake --classic
+git clone https://github.com/aligungr/UERANSIM
+cd UERANSIM
+make
+-------------
