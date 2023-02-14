@@ -1,0 +1,58 @@
+Oct 27 14:17:21.450 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Oct 27 14:17:21.450 HYPERVISOR: Started on IP = localhost, TCP port = 50622.
+Oct 27 14:17:21.944 HYPERVISOR: exec_cmd: hypervisor version 
+Oct 27 14:17:21.944 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao3\Guiao3\project-files\dynamips 
+Oct 27 14:17:21.944 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao3\Guiao3\project-files\dynamips
+Oct 27 14:17:21.944 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao3\Guiao3\project-files\dynamips\6cfa7e18-5cd2-4090-ae4e-5ffeffd594dd 
+Oct 27 14:17:21.949 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao3\Guiao3\project-files\dynamips\6cfa7e18-5cd2-4090-ae4e-5ffeffd594dd
+Oct 27 14:17:21.949 HYPERVISOR: exec_cmd: vm create R2 2 c7200 
+Oct 27 14:17:21.949 VM: VM R2 created.
+Oct 27 14:17:21.949 HYPERVISOR: exec_cmd: vm set_con_tcp_port R2 5001 
+Oct 27 14:17:21.949 HYPERVISOR: exec_cmd: c7200 get_mac_addr R2 
+Oct 27 14:17:21.949 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm slot_add_binding R2 0 0 C7200-IO-FE 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm set_ios R2 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm set_idle_pc R2 0x63184dd4 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm set_exec_area R2 64 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm set_ram R2 512 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm set_nvram R2 512 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm set_disk0 R2 0 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm slot_remove_binding R2 0 0 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm slot_add_binding R2 0 0 C7200-IO-2FE 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm slot_add_binding R2 1 0 PA-2FE-TX 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm slot_add_binding R2 2 0 PA-2FE-TX 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 27 14:17:21.952 HYPERVISOR: exec_cmd: vm slot_add_binding R2 3 0 PA-2FE-TX 
+Oct 27 14:17:22.018 HYPERVISOR: exec_cmd: vm set_ios R2 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:17:50.535 HYPERVISOR: exec_cmd: vm set_ios R2 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:17:50.535 HYPERVISOR: exec_cmd: vm rename R2 R1 
+Oct 27 14:17:50.583 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:18:13.942 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:18:20.139 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:18:52.530 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:18:57.083 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:18:59.825 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:19:28.881 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:19:35.432 HYPERVISOR: exec_cmd: vm set_ios R1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 27 14:20:40.902 HYPERVISOR: exec_cmd: nio create_udp udp-ac526689-4385-4c20-bd51-7820f990665b 10026 127.0.0.1 10027 
+Oct 27 14:20:41.155 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 0 0 udp-ac526689-4385-4c20-bd51-7820f990665b 
+Oct 27 14:20:41.155 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 27 14:20:47.521 HYPERVISOR: exec_cmd: nio create_udp udp-c20bc4cc-76bd-440d-8ce6-a3b736ef5fd7 10030 127.0.0.1 10031 
+Oct 27 14:20:47.527 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 1 0 udp-c20bc4cc-76bd-440d-8ce6-a3b736ef5fd7 
+Oct 27 14:20:47.527 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 27 14:20:53.540 HYPERVISOR: exec_cmd: nio create_udp udp-7dec0542-fc9f-4c7e-bdf2-4364b9254e1b 10034 127.0.0.1 10035 
+Oct 27 14:20:53.540 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R1 0 1 udp-7dec0542-fc9f-4c7e-bdf2-4364b9254e1b 
+Oct 27 14:20:53.548 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 27 15:25:29.770 HYPERVISOR: exec_cmd: vm set_ghost_status R1 2 
+Oct 27 15:25:29.770 HYPERVISOR: exec_cmd: vm set_ghost_file R1 C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao3\Guiao3\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Oct 27 15:25:29.770 HYPERVISOR: exec_cmd: vm get_status R1 
+Oct 27 15:25:29.770 HYPERVISOR: exec_cmd: vm set_config R1 configs\i2_startup-config.cfg 
+Oct 27 15:25:29.770 HYPERVISOR: exec_cmd: vm start R1 
+Oct 27 15:26:00.099 HYPERVISOR: exec_cmd: vm extract_config R1 
+Oct 27 15:38:00.265 HYPERVISOR: exec_cmd: vm extract_config R1 
+Oct 27 15:48:30.425 HYPERVISOR: exec_cmd: vm extract_config R1 

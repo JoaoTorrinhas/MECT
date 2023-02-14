@@ -1,0 +1,129 @@
+NOTA: VXLAN E EVPN É IMPORTANTE PARA O CURRICULO
+
+NO PROJETO -> CONFIGURAR NO CORE MPLS, OSPF... BGP INTERNO
+
+3/4.
+	-As labels só aparecem até ao penultimo router, pq o último router entrega o pacote diretamente ao destino, por isso não é preciso label
+	-Por exemplo, no ex.4:
+	-Se fizermos o ping "ping 192.1.1.11 source f0/0" nas capturas entre o RA-R1 e R2-RB, vemos q o ping segue por baixo, icmp request, (RA-R2,R2-RB) e dps segue por cima (RB-R1,R1-RA).
+	-Posto isto, nas capturas de cima não conseguimos ver nenhuma label mpls pq trata-se do ultimo router, se for por baixo, como a captura está depois do ultimo router (R2), sem contar com o destino, não vemos a label mpls
+	-Se fizermos a captura antes do R2 (RA-R2), vemos a label mpls q no caso é 22.
+
+5.
+	- Ao corrermos o comando show ip ospf database opaque-area, basicamente vemos os vizinhos para onde é possível criar um tunnel.
+
+7.
+	-Nas capturas vemos que o ping foi pelos tuneis, devido ao valor das labels.
+	-Por exemplo, no ping do routerA para o 192.1.1.139 do router B, vemos no wireshark q a label correspondente a esse pacote é o 18, e se formos ao router A
+	-e escrevermos "show mpls traffic-eng tunnels", vemos que o label 18 corresponde ao next-hop 200.10.2.1 q é a interface do router2, logo escolheu o tunel de baixo
+
+8.
+	-As rotas estaticas desaparecem pq têm um custo administrativo maior que as rotas dinamicas, logo na tabela de encaminhamento passam a estar as rotas para os tunneis aprendidas dinamicamente por OPSF.
+	-Por exemplo, para o routerA:
+
+	O        192.1.1.0 [110/3] via 192.2.0.11, 00:00:33, Tunnel2
+                   [110/3] via 192.2.0.11, 00:00:53, Tunnel1
+	O        192.1.1.128 [110/3] via 192.2.0.11, 00:00:33, Tunnel2
+                     [110/3] via 192.2.0.11, 00:00:53, Tunnel1
+
+9.
+	-Antes de aplicarmos as métricas, para a rede 192.1.1.0 (net B.1) e 192.1.1.128 (net B.2), na tabela de encaminhamento tinha dois caminhos, um pelo tunnel1 e outro pelo tunnel2
+	-Após introduzir a metric = 5 no tunnel 2, na tabela de encaminhamento do RA tem apenas um caminho/rota pelo tunnel1, pq o msm é o q tem menos métrica, logo é escolhido (VER!)
+	-Após introduzir a metric= 20 nos dois tunnel's, como a metric é muito alta então ele escolhe ir pelas interfaces do router em vez do tunnel, como mostra o exemplo:
+	-Antes de aplicar o segundo comando (metric = 20):
+
+	O        192.1.1.0 [110/3] via 192.2.0.11, 00:17:56, Tunnel1
+	O        192.1.1.128 [110/3] via 192.2.0.11, 00:17:56, Tunnel1
+
+	-Depois de aplicar o segundo comando:
+
+	O        192.1.1.0 [110/3] via 200.10.2.1, 00:00:23, FastEthernet1/1
+                   [110/3] via 200.10.1.1, 00:00:23, FastEthernet1/0
+	O        192.1.1.128 [110/3] via 200.10.2.1, 00:00:23, FastEthernet1/1
+                     [110/3] via 200.10.1.1, 00:00:23, FastEthernet1/0
+
+	-Ou seja, em cima removeu os caminhos pelos tunneis pois têm metric de 20, enquanto q por ospf tem de 3, 3<20, logo são escolhidos
+
+10.
+	-Adicionou mais os 2 tunnel's (tunnel 3 e tunnel 4)
+
+11.
+	-Depois de deitarmos abaixo a interface f1/0 do RA, o tunnel 1 (static) fica down pq existe um tunnel (tunnel3) q é dinamico outros caminhos por baixo tunnel2 e tunnel4.
+	-Os tunneis dinamicos nunca ficam down a não ser q não haja mais caminhos
+
+13.
+	-O RA e RB conhecem-se através de um tunel vpn (de uma VPN), que contem a rede privada que conecta os dois routers, como mostra a tabela de encaminhamento:
+	-RA (VPN-1):
+	      192.1.1.0/25 is subnetted, 1 subnets
+B        192.1.1.0 [200/0] via 192.2.0.11, 00:05:08
+      192.3.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.3.1.0/24 is directly connected, FastEthernet0/0
+L        192.3.1.10/32 is directly connected, FastEthernet0/0
+
+	-RA (VPN-2):
+	192.1.1.0/25 is subnetted, 1 subnets
+B        192.1.1.128 [200/0] via 192.2.0.11, 00:05:50
+      192.3.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.3.2.0/24 is directly connected, FastEthernet0/1
+L        192.3.2.10/32 is directly connected, FastEthernet0/1
+
+	-RB (VPN-1):
+	192.1.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.1.1.0/25 is directly connected, FastEthernet0/0
+L        192.1.1.11/32 is directly connected, FastEthernet0/0
+B     192.3.1.0/24 [200/0] via 192.2.0.10, 00:06:09
+
+	-RB (VPN-2):
+	192.1.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.1.1.128/25 is directly connected, FastEthernet0/1
+L        192.1.1.139/32 is directly connected, FastEthernet0/1
+B     192.3.2.0/24 [200/0] via 192.2.0.10, 00:06:19
+
+
+14.
+	-O resultado do ping dá destination host unreachable pq o pc1 está dentro do tunel privado (corresponde à VPN), ou seja, ele não vai conhecer a rede para o qual está a pingar
+
+15.
+	-Continua a haver falta de conectividade pq o pc1 agora só conhece o R1 no sentido da esquerda para direita, mas qnd o pacote chega ao R1, ele não conhece o pc1, logo não chega a enviar o ping.
+	-Foi criada uma rota omissão da VPN para fora (rede global)
+	-tabela de encaminhamento do RA (show ip route vrf VPN-1):
+	
+	
+S*    0.0.0.0/0 [1/0] via 200.10.1.1
+      192.1.1.0/25 is subnetted, 1 subnets
+B        192.1.1.0 [200/0] via 192.2.0.11, 00:07:38
+      192.3.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.3.1.0/24 is directly connected, FastEthernet0/0
+L        192.3.1.10/32 is directly connected, FastEthernet0/0
+
+
+16.
+	-Agora já há conectividade entre o R1 e o PC1 pq o R1 já conhece o PC1
+	-Tabela de encaminhamento do router1:
+	
+	192.2.0.0/32 is subnetted, 4 subnets
+C        192.2.0.1 is directly connected, Loopback0
+O        192.2.0.2 [110/2] via 200.1.2.2, 00:07:11, FastEthernet0/1
+O        192.2.0.10 [110/2] via 200.10.1.10, 00:01:07, FastEthernet0/0
+O        192.2.0.11 [110/2] via 200.1.11.11, 00:07:11, FastEthernet1/0
+O E2  192.3.1.0/24 [110/20] via 200.10.1.10, 00:01:07, FastEthernet0/0
+      200.1.2.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.1.2.0/24 is directly connected, FastEthernet0/1
+L        200.1.2.1/32 is directly connected, FastEthernet0/1
+      200.1.11.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.1.11.0/24 is directly connected, FastEthernet1/0
+L        200.1.11.1/32 is directly connected, FastEthernet1/0
+O     200.2.11.0/24 [110/2] via 200.1.11.11, 00:07:11, FastEthernet1/0
+                    [110/2] via 200.1.2.2, 00:07:11, FastEthernet0/1
+      200.10.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.10.1.0/24 is directly connected, FastEthernet0/0
+L        200.10.1.1/32 is directly connected, FastEthernet0/0
+O     200.10.2.0/24 [110/2] via 200.10.1.10, 00:01:07, FastEthernet0/0
+                    [110/2] via 200.1.2.2, 00:07:11, FastEthernet0/1
+
+
+
+
+
+	
+

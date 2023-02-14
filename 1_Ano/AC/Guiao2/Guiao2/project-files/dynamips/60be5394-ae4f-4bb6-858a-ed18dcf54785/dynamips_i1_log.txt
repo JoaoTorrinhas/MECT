@@ -1,0 +1,13 @@
+Oct 20 12:18:55.386 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Oct 20 12:18:55.386 HYPERVISOR: Started on IP = localhost, TCP port = 61155.
+Oct 20 12:18:55.496 HYPERVISOR: exec_cmd: hypervisor version 
+Oct 20 12:18:55.496 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips 
+Oct 20 12:18:55.546 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips
+Oct 20 12:18:55.556 HYPERVISOR: exec_cmd: ethsw create Switch2 
+Oct 20 12:19:06.608 HYPERVISOR: exec_cmd: nio create_udp udp-44e1d330-60e7-4742-8e18-6ab7693d0efd 10004 127.0.0.1 10005 
+Oct 20 12:19:06.612 HYPERVISOR: exec_cmd: ethsw add_nio Switch2 udp-44e1d330-60e7-4742-8e18-6ab7693d0efd 
+Oct 20 12:19:06.612 HYPERVISOR: exec_cmd: ethsw set_access_port Switch2 udp-44e1d330-60e7-4742-8e18-6ab7693d0efd 1 
+Oct 20 18:42:40.138 HYPERVISOR: exec_cmd: ethsw delete Switch2 
+Oct 20 18:42:40.141 HYPERVISOR: exec_cmd: hypervisor stop 
+Oct 20 18:42:40.498 HYPERVISOR: Stopped.
+Oct 20 18:42:40.499 GENERAL: reset done.

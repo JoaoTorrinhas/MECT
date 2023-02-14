@@ -1,0 +1,79 @@
+Oct 20 12:18:57.455 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Oct 20 12:18:57.455 HYPERVISOR: Started on IP = localhost, TCP port = 61169.
+Oct 20 12:18:57.927 HYPERVISOR: exec_cmd: hypervisor version 
+Oct 20 12:18:57.927 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips 
+Oct 20 12:18:57.927 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips
+Oct 20 12:18:57.927 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips\c0a4ac57-7e9c-42c8-a6ec-b4e664ff52ea 
+Oct 20 12:18:57.927 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips\c0a4ac57-7e9c-42c8-a6ec-b4e664ff52ea
+Oct 20 12:18:57.927 HYPERVISOR: exec_cmd: vm create R2 3 c7200 
+Oct 20 12:18:57.937 VM: VM R2 created.
+Oct 20 12:18:57.937 HYPERVISOR: exec_cmd: vm set_con_tcp_port R2 5005 
+Oct 20 12:18:57.937 HYPERVISOR: exec_cmd: c7200 get_mac_addr R2 
+Oct 20 12:18:57.937 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:18:57.937 HYPERVISOR: exec_cmd: vm slot_add_binding R2 0 0 C7200-IO-FE 
+Oct 20 12:18:57.937 HYPERVISOR: exec_cmd: vm set_disk0 R2 0 
+Oct 20 12:18:57.937 HYPERVISOR: exec_cmd: vm set_exec_area R2 64 
+Oct 20 12:18:57.937 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:18:57.937 HYPERVISOR: exec_cmd: vm set_idle_pc R2 0x63184dd4 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm set_ios R2 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: c7200 set_mac_addr R2 ca03.5aec.0000 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm set_nvram R2 512 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm set_ram R2 512 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm slot_remove_binding R2 0 0 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm slot_add_binding R2 0 0 C7200-IO-2FE 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm slot_add_binding R2 1 0 PA-2FE-TX 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm slot_add_binding R2 2 0 PA-2FE-TX 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:18:57.947 HYPERVISOR: exec_cmd: vm slot_add_binding R2 3 0 PA-2FE-TX 
+Oct 20 12:19:09.293 HYPERVISOR: exec_cmd: nio create_udp udp-a37120b1-0a8d-46e8-81ae-7a83bda52cb8 10034 127.0.0.1 10035 
+Oct 20 12:19:09.576 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 0 0 udp-a37120b1-0a8d-46e8-81ae-7a83bda52cb8 
+Oct 20 12:19:09.576 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:19:09.677 HYPERVISOR: exec_cmd: nio create_udp udp-90f94487-0158-4742-a6d8-7659d843e0f1 10038 127.0.0.1 10039 
+Oct 20 12:19:09.677 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 0 1 udp-90f94487-0158-4742-a6d8-7659d843e0f1 
+Oct 20 12:19:09.687 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:19:09.960 HYPERVISOR: exec_cmd: nio create_udp udp-7f46c146-ad8b-47dd-aaf8-c001537575b6 10046 127.0.0.1 10047 
+Oct 20 12:19:09.960 HYPERVISOR: exec_cmd: vm slot_add_nio_binding R2 1 0 udp-7f46c146-ad8b-47dd-aaf8-c001537575b6 
+Oct 20 12:19:09.960 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:21:11.479 HYPERVISOR: exec_cmd: vm set_ghost_status R2 2 
+Oct 20 12:21:11.479 HYPERVISOR: exec_cmd: vm set_ghost_file R2 C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Oct 20 12:21:11.479 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 12:21:11.479 HYPERVISOR: exec_cmd: vm set_config R2 configs\i3_startup-config.cfg configs\i3_private-config.cfg 
+Oct 20 12:21:11.479 HYPERVISOR: exec_cmd: vm start R2 
+Oct 20 12:21:41.841 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 12:40:12.168 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 12:40:42.160 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 13:01:12.412 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 13:05:12.467 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 14:26:12.924 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 14:41:13.178 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 14:57:43.491 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 15:12:43.652 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 15:26:43.965 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 15:44:16.064 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 15:44:16.064 HYPERVISOR: exec_cmd: vm stop R2 
+Oct 20 15:44:16.336 VM: VM R2 shutdown.
+Oct 20 15:44:16.338 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 15:45:16.400 HYPERVISOR: exec_cmd: vm set_ghost_status R2 2 
+Oct 20 15:45:16.400 HYPERVISOR: exec_cmd: vm set_ghost_file R2 C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Oct 20 15:45:16.400 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 15:45:16.400 HYPERVISOR: exec_cmd: vm set_config R2 configs\i3_startup-config.cfg configs\i3_private-config.cfg 
+Oct 20 15:45:16.400 HYPERVISOR: exec_cmd: vm start R2 
+Oct 20 18:20:45.711 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 18:38:46.092 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 18:42:32.714 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 18:42:32.714 HYPERVISOR: exec_cmd: vm stop R2 
+Oct 20 18:42:32.876 VM: VM R2 shutdown.
+Oct 20 18:42:32.881 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 18:42:40.108 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 18:42:40.109 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 18:42:40.506 HYPERVISOR: exec_cmd: vm get_status R2 
+Oct 20 18:42:40.508 HYPERVISOR: exec_cmd: vm extract_config R2 
+Oct 20 18:42:40.514 HYPERVISOR: exec_cmd: vm delete R2 
+Oct 20 18:42:40.514 VM: VM R2 destroyed.
+Oct 20 18:42:40.522 HYPERVISOR: exec_cmd: hypervisor stop 
+Oct 20 18:42:41.009 HYPERVISOR: Stopped.
+Oct 20 18:42:41.009 GENERAL: reset done.

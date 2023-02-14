@@ -1,0 +1,193 @@
+-------------------6-------------------
+
+RA
+
+config term
+interface tunnel 1
+ip unnumbered Loopback0
+tunnel destination 192.2.0.11
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng bandwidth 150
+tunnel mpls traffic-eng path-option 1 explicit name path1
+interface tunnel 2
+ip unnumbered Loopback0
+tunnel destination 192.2.0.11
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng bandwidth 150
+tunnel mpls traffic-eng path-option 1 explicit name path2
+ip explicit-path name path1 enable
+next-address 200.10.1.1 
+next-address 200.1.11.11
+ip explicit-path name path2 enable
+next-address 200.10.2.1 
+next-address 200.2.11.11
+end
+write
+
+RB
+
+config term
+interface tunnel 1
+ip unnumbered Loopback0
+tunnel destination 192.2.0.10
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng bandwidth 150
+tunnel mpls traffic-eng path-option 1 explicit name path1
+interface tunnel 2
+ip unnumbered Loopback0
+tunnel destination 192.2.0.10
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng bandwidth 150
+tunnel mpls traffic-eng path-option 1 explicit name path2
+ip explicit-path name path1 enable 
+next-address 200.1.11.1
+next-address 200.10.1.10
+ip explicit-path name path2 enable
+next-address 200.2.11.1
+next-address 200.10.2.10 
+end
+write  
+
+---------------------------------10--------------------------
+
+RA
+
+config term
+interface tunnel 3
+ip unnumbered Loopback0
+tunnel destination 192.2.0.11
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng autoroute announce
+tunnel mpls traffic-eng bandwidth 150
+tunnel mpls traffic-eng path-option 1 dynamic
+interface tunnel 4
+ip unnumbered Loopback0
+tunnel destination 192.2.0.11
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng autoroute announce
+tunnel mpls traffic-eng auto-bw
+tunnel mpls traffic-eng path-option 1 dynamic
+end
+write
+
+RB
+
+config term
+interface tunnel 3
+ip unnumbered Loopback0
+tunnel destination 192.2.0.10
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng autoroute announce
+tunnel mpls traffic-eng bandwidth 150
+tunnel mpls traffic-eng path-option 1 dynamic
+interface tunnel 4
+ip unnumbered Loopback0
+tunnel destination 192.2.0.10
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng autoroute announce
+tunnel mpls traffic-eng auto-bw 
+tunnel mpls traffic-eng path-option 1 dynamic
+end
+write
+
+------------------12---------------
+
+RA e RB
+
+config term
+interface range tunnel 1-4
+shutdown
+end
+write
+
+RA/RB/R1/R2
+
+config term
+no mpls traffic-eng tunnels
+interface range FastEthernet 0/0-1
+no mpls traffic-eng tunnels
+no ip rsvp bandwidth 512 512
+interface range FastEthernet 1/0-1
+no mpls traffic-eng tunnels
+no ip rsvp bandwidth 512 512
+router ospf 1
+no mpls traffic-eng router-id Loopback0
+no mpls traffic-eng area 0
+end
+write
+
+-------------------13--------------------
+RA
+
+config term
+ip vrf VPN-1
+rd 200:1
+route-target export 200:1
+route-target import 200:1
+ip vrf VPN-2
+rd 200:2
+route-target export 200:2
+route-target import 200:2
+interface FastEthernet0/0
+ip vrf forwarding VPN-1
+ip address 192.3.1.10 255.255.255.0 
+interface FastEthernet0/1
+ip vrf forwarding VPN-2
+ip address 192.3.2.10 255.255.255.0
+end
+write
+
+RB
+
+config term
+ip vrf VPN-1
+rd 200:1
+route-target export 200:1
+route-target import 200:1
+ip vrf VPN-2
+rd 200:2
+route-target export 200:2
+route-target import 200:2
+interface FastEthernet0/0
+ip vrf forwarding VPN-1
+ip address 192.1.1.11 255.255.255.128 
+interface FastEthernet0/1
+ip vrf forwarding VPN-2
+ip address 192.1.1.139 255.255.255.128
+end
+write
+
+
+RA
+
+config term
+router bgp 200
+bgp router-id 10.10.10.10 
+neighbor 192.2.0.11 remote-as 200
+neighbor 192.2.0.11 update-source Loopback0
+address-family vpnv4
+neighbor 192.2.0.11 activate
+neighbor 192.2.0.11 send-community both
+address-family ipv4 vrf VPN-1
+redistribute connected
+address-family ipv4 vrf VPN-2
+redistribute connected 
+end
+write
+
+RB
+
+config term
+router bgp 200
+bgp router-id 11.11.11.11 
+neighbor 192.2.0.10 remote-as 200
+neighbor 192.2.0.10 update-source Loopback0
+address-family vpnv4
+neighbor 192.2.0.10 activate
+neighbor 192.2.0.10 send-community both
+address-family ipv4 vrf VPN-1
+redistribute connected
+address-family ipv4 vrf VPN-2
+redistribute connected 
+end
+write

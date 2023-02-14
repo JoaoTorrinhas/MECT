@@ -1,0 +1,7 @@
+cygwin warning:
+  MS-DOS style path detected: C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao3\Guiao3\project-files\dynamips
+  Preferred POSIX equivalent is: /cygdrive/c/Users/jptor/Desktop/Mestrado/4_Ano/AC/Guiao3/Guiao3/project-files/dynamips
+  CYGWIN environment variable option "nodosfilewarning" turns off this warning.
+  Consult the user's guide for more details about POSIX paths:
+    http://cygwin.com/cygwin-ug-net/using.html#using-pathnames
+netio_desc_create_udp: unable to connect to 127.0.0.1:10011

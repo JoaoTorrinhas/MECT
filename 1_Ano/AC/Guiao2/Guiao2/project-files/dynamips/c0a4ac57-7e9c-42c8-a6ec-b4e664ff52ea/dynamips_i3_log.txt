@@ -1,0 +1,19 @@
+Oct 20 12:18:56.311 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Oct 20 12:18:56.311 HYPERVISOR: Started on IP = localhost, TCP port = 61163.
+Oct 20 12:18:56.772 HYPERVISOR: exec_cmd: hypervisor version 
+Oct 20 12:18:56.772 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips 
+Oct 20 12:18:56.772 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\dynamips
+Oct 20 12:18:56.772 HYPERVISOR: exec_cmd: ethsw create Switch3 
+Oct 20 12:19:06.762 HYPERVISOR: exec_cmd: nio create_udp udp-0b61ce99-c6ea-4c28-af67-fb89792b026e 10008 127.0.0.1 10009 
+Oct 20 12:19:06.772 HYPERVISOR: exec_cmd: ethsw add_nio Switch3 udp-0b61ce99-c6ea-4c28-af67-fb89792b026e 
+Oct 20 12:19:06.802 HYPERVISOR: exec_cmd: ethsw set_access_port Switch3 udp-0b61ce99-c6ea-4c28-af67-fb89792b026e 1 
+Oct 20 12:19:06.912 HYPERVISOR: exec_cmd: nio create_udp udp-736c5efc-f9d2-45dc-baf0-b26d91f79875 10012 127.0.0.1 10013 
+Oct 20 12:19:06.912 HYPERVISOR: exec_cmd: ethsw add_nio Switch3 udp-736c5efc-f9d2-45dc-baf0-b26d91f79875 
+Oct 20 12:19:06.922 HYPERVISOR: exec_cmd: ethsw set_access_port Switch3 udp-736c5efc-f9d2-45dc-baf0-b26d91f79875 1 
+Oct 20 17:27:17.130 HYPERVISOR: exec_cmd: nio bind_filter udp-0b61ce99-c6ea-4c28-af67-fb89792b026e 2 capture 
+Oct 20 17:27:17.131 HYPERVISOR: exec_cmd: nio setup_filter udp-0b61ce99-c6ea-4c28-af67-fb89792b026e 2 en10mb C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Guiao2\Guiao2\project-files\captures\Switch3_Ethernet0_to_RA_FastEthernet10.pcap 
+Oct 20 18:42:27.947 HYPERVISOR: exec_cmd: nio unbind_filter udp-0b61ce99-c6ea-4c28-af67-fb89792b026e 2 
+Oct 20 18:42:40.138 HYPERVISOR: exec_cmd: ethsw delete Switch3 
+Oct 20 18:42:40.173 HYPERVISOR: exec_cmd: hypervisor stop 
+Oct 20 18:42:40.498 HYPERVISOR: Stopped.
+Oct 20 18:42:40.499 GENERAL: reset done.

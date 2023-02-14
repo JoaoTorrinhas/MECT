@@ -1,0 +1,10 @@
+Ex 2/3/4.
+	-Num cenário real viamos o desempenho de cada um dos 3 tráfegos, mas neste caso apenas vemos no cabeçalho o valor de cada um deles, se for EF o valor é 46.
+	-Quando não se define nenhuma classe/tráfego especial o valor é dafault (0)
+	
+Ex 5/6/7
+	EEF garantem atraso minimo
+	-"Priority percent" garante o atraso minimo
+	-"Bandwith" nao garante que o atraso é minimo
+Ex 8
+	O valor que mostra é o 47, que é o valor que definimos (set ip dscp 47) para a class DIAMOND

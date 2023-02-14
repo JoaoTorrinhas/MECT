@@ -1,0 +1,202 @@
+2.
+	-Ainda não aparecer as redes tds.
+	-Por exemplo, o router1 nao vai ter as redes da AS100, pq o next-hope para essa rede devia ser a interface do router2 (ele conhece) e no entanto o next-hope é a interface do routerB
+	-Logo, como r1 nao conhece essa interface nao vai ter as redes dessa AS, dai termos de usar o next-hope-self para o next-hope passar a ser a interface do router2
+
+4.
+	-Continua a haver conectividade normalmente
+	-AS rotas por bgp são trocadas por rotas ospf, por exemplo para o router2, as rotas q tinha por bgp para a rede da AS300, agr tem por ospf através da redistribuição.
+	-Exemplo:
+	-O E2  192.3.1.0/24 [110/1] via 192.2.12.1, 00:00:35, FastEthernet0/0
+	-O E2  192.3.2.0/24 [110/1] via 192.2.12.1, 00:00:35, FastEthernet0/0
+	-No router1 não anuncia tds as redes, não anuncia as redes da AS100, pq tem máscara /25.
+
+5.
+	-Corrige o problema anterior da máscara.
+	-Anuncia tds as redes
+
+	-192.1.1.0/25 is subnetted, 2 subnets
+	-O E2     192.1.1.0 [110/1] via 192.2.12.2, 00:02:23, FastEthernet0/0
+	-O E2     192.1.1.128 [110/1] via 192.2.12.2, 00:02:23, FastEthernet0/0
+
+
+	-Uma das desvantagens pode ser o facto de as routing tables dos routers serem muito grandes e tb pode haver conflitos internos
+
+6.
+	-Antes o routerA e o routerB não tinham os endereços das redes da AS, agr como foram anunciados. Tanto o routerA como o routerB passam a ter as redes da AS200.
+
+7.
+	-Antes de dar shutdown (R2)
+
+192.1.1.0/25 is subnetted, 2 subnets
+B        192.1.1.0 [20/0] via 200.2.11.11, 00:16:00
+B        192.1.1.128 [20/0] via 200.2.11.11, 00:16:00
+      192.2.0.0/32 is subnetted, 2 subnets
+O        192.2.0.1 [110/2] via 192.2.12.1, 00:00:35, FastEthernet0/0
+C        192.2.0.2 is directly connected, Loopback0
+      192.2.12.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.2.12.0/24 is directly connected, FastEthernet0/0
+L        192.2.12.2/32 is directly connected, FastEthernet0/0
+O     192.2.13.0/24 [110/2] via 192.2.23.3, 00:00:35, FastEthernet0/1
+                    [110/2] via 192.2.12.1, 00:00:35, FastEthernet0/0
+      192.2.23.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.2.23.0/24 is directly connected, FastEthernet0/1
+L        192.2.23.2/32 is directly connected, FastEthernet0/1
+O E2  192.3.1.0/24 [110/1] via 192.2.12.1, 00:00:35, FastEthernet0/0
+O E2  192.3.2.0/24 [110/1] via 192.2.12.1, 00:00:35, FastEthernet0/0
+      200.2.11.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.2.11.0/24 is directly connected, FastEthernet1/0
+L        200.2.11.2/32 is directly connected, FastEthernet1/0
+
+	-Depois de dar shutdown(R2)
+
+192.1.1.0/25 is subnetted, 2 subnets
+B        192.1.1.0 [20/0] via 200.2.11.11, 00:51:56
+B        192.1.1.128 [20/0] via 200.2.11.11, 00:51:56
+      192.2.0.0/32 is subnetted, 2 subnets
+O        192.2.0.1 [110/3] via 192.2.23.3, 00:00:27, FastEthernet0/1
+C        192.2.0.2 is directly connected, Loopback0
+O     192.2.12.0/24 [110/3] via 192.2.23.3, 00:00:27, FastEthernet0/1
+O     192.2.13.0/24 [110/2] via 192.2.23.3, 00:36:31, FastEthernet0/1
+      192.2.23.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.2.23.0/24 is directly connected, FastEthernet0/1
+L        192.2.23.2/32 is directly connected, FastEthernet0/1
+B     192.3.1.0/24 [20/0] via 200.2.11.11, 00:00:28
+B     192.3.2.0/24 [20/0] via 200.2.11.11, 00:00:28
+      200.2.11.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.2.11.0/24 is directly connected, FastEthernet1/0
+L        200.2.11.2/32 is directly connected, FastEthernet1/0
+
+	-Ou seja, ele aprende a rede 192.2.12.0 por ospf em vez de ser directed connected
+
+	Antes de dar shutdown (R1)
+
+192.1.1.0/25 is subnetted, 2 subnets
+O E2     192.1.1.0 [110/1] via 192.2.12.2, 00:02:23, FastEthernet0/0
+O E2     192.1.1.128 [110/1] via 192.2.12.2, 00:02:23, FastEthernet0/0
+      192.2.0.0/32 is subnetted, 2 subnets
+C        192.2.0.1 is directly connected, Loopback0
+O        192.2.0.2 [110/2] via 192.2.12.2, 00:16:54, FastEthernet0/0
+      192.2.12.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.2.12.0/24 is directly connected, FastEthernet0/0
+L        192.2.12.1/32 is directly connected, FastEthernet0/0
+      192.2.13.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.2.13.0/24 is directly connected, FastEthernet0/1
+L        192.2.13.1/32 is directly connected, FastEthernet0/1
+O     192.2.23.0/24 [110/2] via 192.2.13.3, 00:18:43, FastEthernet0/1
+                    [110/2] via 192.2.12.2, 00:16:54, FastEthernet0/0
+B     192.3.1.0/24 [20/0] via 200.10.1.10, 00:32:19
+B     192.3.2.0/24 [20/0] via 200.10.1.10, 00:32:19
+      200.10.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.10.1.0/24 is directly connected, FastEthernet1/0
+L        200.10.1.1/32 is directly connected, FastEthernet1/0
+
+	Depois de dar shutdown (R1)
+
+192.1.1.0/25 is subnetted, 2 subnets
+B        192.1.1.0 [20/0] via 200.10.1.10, 00:00:11
+B        192.1.1.128 [20/0] via 200.10.1.10, 00:00:11
+      192.2.0.0/32 is subnetted, 2 subnets
+C        192.2.0.1 is directly connected, Loopback0
+O        192.2.0.2 [110/3] via 192.2.13.3, 00:02:19, FastEthernet0/1
+      192.2.12.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.2.12.0/24 is directly connected, FastEthernet0/0
+L        192.2.12.1/32 is directly connected, FastEthernet0/0
+      192.2.13.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.2.13.0/24 is directly connected, FastEthernet0/1
+L        192.2.13.1/32 is directly connected, FastEthernet0/1
+O     192.2.23.0/24 [110/2] via 192.2.13.3, 00:39:56, FastEthernet0/1
+B     192.3.1.0/24 [20/0] via 200.10.1.10, 00:53:32
+B     192.3.2.0/24 [20/0] via 200.10.1.10, 00:53:32
+      200.10.1.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.10.1.0/24 is directly connected, FastEthernet1/0
+L        200.10.1.1/32 is directly connected, FastEthernet1/0
+
+	-Ou seja, ele aprendeu a rede da AS 100, pela interface do routerA, pois nesse lado da rede há bgp process
+
+8.
+	-Agora aparece o loopback.
+	-Vantagem: Se o cabo sai, o bgp não vai abaixo
+
+9.
+	-Só tem ospf pq o custo administrativo do ospf é menor que o do bgp, logo as rotas por opsf são preferiveis
+	-Depois de mudarmos o custo administrativo das rotas por opsf para 220 que é maior q 200 (custo administrativo do bgp), as rotas por bgp são as que aparecem agora pq tem um custo mais pequeno 200<220
+
+10.
+	*>  192.1.1.0/25     200.10.11.11             0             0 100 i
+ 	*>  192.1.1.128/25   200.10.11.11             0             0 100 i
+
+	-A AS200 deixou de ser de transito, portanto, agr o routerA conhece a AS100 pela ligaçao direta do routerA-routerB, ou seja, por baixo
+	-Se a ligaçao RA-RB for deitada abaixo, vai deixar de haver conectividade com a AS 100, ele nunca vai buscar a outra alternativa, que é ir pela AS200
+	- O ...permit ^$ indica que o AS Path é vazio
+
+11.
+	-Community é basicamente dar labels a rotas, e dps escolhe as rotas (labels) por onde quer ir
+	
+	R2 sem community filter
+
+192.1.1.0/25 is subnetted, 2 subnets
+B        192.1.1.0 [20/0] via 200.2.11.11, 00:30:15
+B        192.1.1.128 [20/0] via 200.2.11.11, 00:30:15
+      192.2.0.0/32 is subnetted, 2 subnets
+O        192.2.0.1 [110/3] via 192.2.23.3, 00:30:36, FastEthernet0/1
+C        192.2.0.2 is directly connected, Loopback0
+O     192.2.12.0/24 [110/3] via 192.2.23.3, 00:30:36, FastEthernet0/1
+O     192.2.13.0/24 [110/2] via 192.2.23.3, 00:30:36, FastEthernet0/1
+      192.2.23.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.2.23.0/24 is directly connected, FastEthernet0/1
+L        192.2.23.2/32 is directly connected, FastEthernet0/1
+O E2  192.3.1.0/24 [110/1] via 192.2.23.3, 00:02:30, FastEthernet0/1
+O E2  192.3.2.0/24 [110/1] via 192.2.23.3, 00:02:30, FastEthernet0/1
+      200.2.11.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.2.11.0/24 is directly connected, FastEthernet1/0
+L        200.2.11.2/32 is directly connected, FastEthernet1/0
+
+	RB sem comunity filter
+	
+ 192.1.1.0/24 is variably subnetted, 4 subnets, 2 masks
+C        192.1.1.0/25 is directly connected, FastEthernet0/0
+L        192.1.1.11/32 is directly connected, FastEthernet0/0
+C        192.1.1.128/25 is directly connected, FastEthernet0/1
+L        192.1.1.139/32 is directly connected, FastEthernet0/1
+      192.2.0.0/32 is subnetted, 2 subnets
+B        192.2.0.1 [20/3] via 200.2.11.2, 00:38:06
+B        192.2.0.2 [20/0] via 200.2.11.2, 00:38:06
+B     192.2.12.0/24 [20/3] via 200.2.11.2, 00:38:06
+B     192.2.13.0/24 [20/2] via 200.2.11.2, 00:38:06
+B     192.2.23.0/24 [20/0] via 200.2.11.2, 00:38:06
+B     192.3.1.0/24 [20/0] via 200.0.0.10, 00:00:54
+B     192.3.2.0/24 [20/0] via 200.0.0.10, 00:00:54
+      200.0.0.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.0.0.0/24 is directly connected, FastEthernet2/0
+L        200.0.0.11/32 is directly connected, FastEthernet2/0
+      200.2.11.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.2.11.0/24 is directly connected, FastEthernet1/0
+L        200.2.11.11/32 is directly connected, FastEthernet1/0
+      200.10.11.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.10.11.0/24 is directly connected, FastEthernet1/1
+L        200.10.11.11/32 is directly connected, FastEthernet1/1
+
+	-Com community filters o show ip bgp dá tds as entradas e o show ip bgp community... dá as entradas do community filter
+
+12.
+	-Basicamente, por exemplo, se temos um router com duas ligações e cada uma das ligações tem uma comunidade diferente, então eu (router) escolhemos a ligação que queremos atribuindo um local preference maior
+
+13. 
+	-Como não existe a ligação entre R1-R2, ao pingarmos para o routerB, o pacote vai para o R1 em vez do R2 pq tem uma métrica mais pequena (5<10), e como R1 já não tem ligaçao com R2 volta a enviar o pacote para R1 entrando, assim, num loop
+
+14.
+	-Se configurarmos primeiro o router1 como saida preferencial da AS, entao qnd pingamos o routerB, vemos pelo wireshark q o ping vai sair pelo router1 (Ligação R1-R3)
+	-Depois de configurarmos o router2, vemos na tabela de encaminhamento do R3 q o msm para as redes da AS300 a saida é pelo R2, e tb se fizermos ping do R3 para o RB a ligação R1-R3 não capta nenhum pacote ICMP, ou seja,
+	-A saida preferencial passa a ser pelo R2 em vez do R1
+
+15.
+	-Adicionou um tunel na tabela de encaminhamento do router1 e router2
+	-Era suposto concluir mais o q?
+
+
+
+
+
+
+
