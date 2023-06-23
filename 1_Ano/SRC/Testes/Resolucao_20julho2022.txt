@@ -1,0 +1,49 @@
+1.
+	Propagação de ataque é quando o atacante já está dentro de um sistema protegido e com a informação q vai aprendendo, progapaga o seu ataque com o objetivo de obter mais informação por exemplo, através da exploração de credenciais ou imitar conhecimento licito (padrões de tráfego, padrões de tempo...) fazendo se passar por usuários, sistemas. Na fase de propagação é provável que o atacante quebre algum padrão, então a melhor maneira é procurarmos por números de comunicações entre ips, rácio entre bytes download/upload, procurar por ips que tenham um número de comunicações superior ao "normal" (média por exemplo), quantidades de tráfego, horas de comunicação...
+
+2.
+	Na ligação ao exterior meter duas firewalls stateless para proteger dos ataques DDOS, dois load balancers para distribuir os pacotes/flows e internamente colocar duas firewalls stateful para proteger/controlar cada zona do edifício e os dois datacenters.
+
+3.
+	Primeiro, vai ter de se criar uma nova zona DMZ, onde vão estar presentes os serviços, ligada às Firewalls. O tráfego para estes serviços (zona DMZ) nunca deverá passar pelo Core.
+	Devem ser aplicadas as seguintes regras nas firewalls stateful:
+	- Bloquear tudo por default.
+	- OUT -> DMZ, deixar passar tráfego TCP com ip origem publico (internet) para portas destino com número 433 e deixar passar tráfego (servidor externo mysql) com a porta destino 3306.
+	- IN -> DMZ, deixar passar tráfego TCP com ip origem privado (terminais internos) para portas destino com número 433.
+	- DMZ -> OUT/IN, deixar passar tráfego de respostas de sessões já estabelecidas.
+
+4.
+	Vai ser necessário criar uma VPN site-to-site com túnel IPsec multi-ponto do tipo ESP para garantir confidencialidade (encriptação) entre o router 3 e os routers 1/2.
+	Utilizar politicas de encaminhamento (PBR) para encaminhar o tráfego de sincronização para os túneis.
+	Alterações/Exceções nas firewalls:
+	- Deixar passar o tráfego referentes ao estabelecimento do túnel entre o router3 e routers 1/2.
+	- Deixar passar tráfego IPsec (IP ESP).
+
+5.
+	Criar uma User VPN client-to-side e colocar um servidor na DMZ.
+	Assumindo que a VPN pertence à zona DMZ vamos efetuar as seguintes alterações nas firewalls:
+	
+	Firewall de acesso à internet:
+
+	- OUT -> DMZ, deixar passar tráfego com destino nos servidores VPN e portos TCP/UDP.
+	- DMZ -> OUT, deixar passar tráfego de respostas de sessões já estabelecidas.
+	- DMZ -> IN, deixar passar tráfego proveniente dos clientes VPN para os endereços ip destino na porta TCP 2222 dos 2 servidores do DCA.
+	- IN -> DMZ, deixar passar tráfego de respostas de sessões já estabelecidas.
+
+	Firewall de acesso ao datacenter:
+	- IN -> DCA, deixar passar tráfego proveniente dos clientes VPN para os endereços ip destino na porta TCP 2222 dos 2 servidores do DCA.  
+	- DCA -> IN, deixar passar tráfego de respostas de sessões já estabelecidas.
+
+6.
+	a) Verificar os logs (rsyslog) dos servidores ssh do datacenterA e alertar caso haja mais do que N tentativas falhas do mesmo endereço ip.
+	
+	b) Verificar os logs do tráfego de rede/flows (netflow ou rsyslog) nos routers/firewalls, e procurar por padrões de tráfego, como por exemplo, rácio de bytes upload/download, bytes download  de pares de ip's... com o objetivo de tentar procurar por padrões que fogem ao habitual.
+
+	c) Verificar os logs sobre o tráfego de rede externo e interno nas firewalls (rsyslog) e ver o rácio de bytes upload/download em sessões MYSQL (porta TCP 3306) e comparar com o que é considerado normal com o objetivo de procurar por flows que fogem à regra.
+	
+
+	
+
+	
+	
+	
