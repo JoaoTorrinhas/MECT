@@ -1,0 +1,1 @@
+spec ratio(opteron) = exec time Ultra5 / opteron exec time
