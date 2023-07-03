@@ -1,0 +1,16 @@
+[1/10] Performing build step for 'bootloader'
+[1/1] cmd.exe /C "cd /D C:\Espressif\frameworks\esp-idf-v5.0\examples\i2c_temperature_aula\build\bootloader\esp-idf\esptool_py && C:\Espressif\python_env\idf5.0_py3.8_env\Scripts\python.exe C:/Espressif/frameworks/esp-idf-v5.0/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Espressif/frameworks/esp-idf-v5.0/examples/i2c_temperature_aula/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6710 bytes. 0x8f0 bytes (8%) free.
+[2/8] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/i2c_temperature_aula.c.obj
+[3/8] Linking C static library esp-idf\main\libmain.a
+[4/8] Generating ld/sections.ld
+[5/8] Building C object CMakeFiles/i2c_temperature_aula.elf.dir/project_elf_src_esp32.c.obj
+[6/8] Linking CXX executable i2c_temperature_aula.elf
+[7/8] Generating binary image from built executable
+esptool.py v4.5
+Creating esp32 image...
+Merged 2 ELF sections
+Successfully created esp32 image.
+Generated C:/Espressif/frameworks/esp-idf-v5.0/examples/i2c_temperature_aula/build/i2c_temperature_aula.bin
+[8/8] cmd.exe /C "cd /D C:\Espressif\frameworks\esp-idf-v5.0\examples\i2c_temperature_aula\build\esp-idf\esptool_py && C:\Espressif\python_env\idf5.0_py3.8_env\Scripts\python.exe C:/Espressif/frameworks/esp-idf-v5.0/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Espressif/frameworks/esp-idf-v5.0/examples/i2c_temperature_aula/build/partition_table/partition-table.bin C:/Espressif/frameworks/esp-idf-v5.0/examples/i2c_temperature_aula/build/i2c_temperature_aula.bin"
+i2c_temperature_aula.bin binary size 0x30e60 bytes. Smallest app partition is 0x100000 bytes. 0xcf1a0 bytes (81%) free.
