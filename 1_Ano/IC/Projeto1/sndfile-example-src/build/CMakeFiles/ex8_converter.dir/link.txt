@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -std=c++17 -O3 CMakeFiles/ex8_converter.dir/ex8_converter.cpp.o -o /home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-bin/ex8_converter  -lsndfile 

@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -std=c++17 -O3 CMakeFiles/ex2.dir/ex2.cpp.o -o /home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-bin/ex2  -lsndfile 

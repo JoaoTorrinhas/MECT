@@ -1,0 +1,6 @@
+media = (1-p)/p
+alpha = 1-p -> p = 1- alpha
+
+media = alpha/1-alpha -> Por exemplo: media = 10 -> 10 = alpha/1-alpha -> 10(1-alpha) = alpha -> 10-10alpha = alpha -> -11alpha = -10 -> alpha = 10/11, logo: alpha = media/media+1
+
+

@@ -1,0 +1,7 @@
+/home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-src/build/CMakeFiles/wav_cp.dir
+/home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-src/build/CMakeFiles/wav_hist.dir
+/home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-src/build/CMakeFiles/wav_dct.dir
+/home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-src/build/CMakeFiles/ex2.dir
+/home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-src/build/CMakeFiles/wav_quant.dir
+/home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-src/build/CMakeFiles/edit_cache.dir
+/home/joao/Desktop/Mestrado/IC/Projeto1/sndfile-example-src/build/CMakeFiles/rebuild_cache.dir
