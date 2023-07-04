@@ -1,0 +1,43 @@
+Nov 25 16:37:15.726 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Nov 25 16:37:15.727 HYPERVISOR: Started on IP = localhost, TCP port = 50535.
+Nov 25 16:37:16.234 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 25 16:37:16.235 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips 
+Nov 25 16:37:16.235 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips
+Nov 25 16:37:16.235 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\43111efd-56b8-4d21-8cda-2f7b35514a67 
+Nov 25 16:37:16.237 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\43111efd-56b8-4d21-8cda-2f7b35514a67
+Nov 25 16:37:16.237 HYPERVISOR: exec_cmd: vm create DCP1 5 c7200 
+Nov 25 16:37:16.239 VM: VM DCP1 created.
+Nov 25 16:37:16.239 HYPERVISOR: exec_cmd: vm set_con_tcp_port DCP1 5004 
+Nov 25 16:37:16.239 HYPERVISOR: exec_cmd: c7200 get_mac_addr DCP1 
+Nov 25 16:37:16.239 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:37:16.240 HYPERVISOR: exec_cmd: vm slot_add_binding DCP1 0 0 C7200-IO-FE 
+Nov 25 16:37:16.240 HYPERVISOR: exec_cmd: vm set_disk0 DCP1 0 
+Nov 25 16:37:16.240 HYPERVISOR: exec_cmd: vm set_exec_area DCP1 64 
+Nov 25 16:37:16.240 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:37:16.241 HYPERVISOR: exec_cmd: vm set_idle_pc DCP1 0x63184dd4 
+Nov 25 16:37:16.241 HYPERVISOR: exec_cmd: vm set_ios DCP1 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Nov 25 16:37:16.242 HYPERVISOR: exec_cmd: c7200 set_mac_addr DCP1 ca05.64b0.0000 
+Nov 25 16:37:16.242 HYPERVISOR: exec_cmd: vm set_nvram DCP1 512 
+Nov 25 16:37:16.242 HYPERVISOR: exec_cmd: vm set_ram DCP1 512 
+Nov 25 16:37:16.242 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:37:16.242 HYPERVISOR: exec_cmd: vm slot_remove_binding DCP1 0 0 
+Nov 25 16:37:16.243 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:37:16.243 HYPERVISOR: exec_cmd: vm slot_add_binding DCP1 0 0 C7200-IO-2FE 
+Nov 25 16:37:16.243 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:37:16.243 HYPERVISOR: exec_cmd: vm slot_add_binding DCP1 1 0 PA-2FE-TX 
+Nov 25 16:37:16.243 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:37:16.243 HYPERVISOR: exec_cmd: vm slot_add_binding DCP1 2 0 PA-2FE-TX 
+Nov 25 16:37:16.243 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:37:16.244 HYPERVISOR: exec_cmd: vm slot_add_binding DCP1 3 0 PA-2FE-TX 
+Nov 25 16:37:18.647 HYPERVISOR: exec_cmd: nio create_udp udp-09dd18f7-3e2a-4877-9c7d-64eafcd3a4e0 10041 127.0.0.1 10042 
+Nov 25 16:37:18.888 HYPERVISOR: exec_cmd: vm slot_add_nio_binding DCP1 0 1 udp-09dd18f7-3e2a-4877-9c7d-64eafcd3a4e0 
+Nov 25 16:37:18.888 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:37:18.922 HYPERVISOR: exec_cmd: nio create_udp udp-5e052719-4e41-4d4e-bd96-4a4a9d840e92 10045 127.0.0.1 10046 
+Nov 25 16:37:18.924 HYPERVISOR: exec_cmd: vm slot_add_nio_binding DCP1 0 0 udp-5e052719-4e41-4d4e-bd96-4a4a9d840e92 
+Nov 25 16:37:18.924 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:38:49.633 HYPERVISOR: exec_cmd: vm set_ghost_status DCP1 2 
+Nov 25 16:38:49.634 HYPERVISOR: exec_cmd: vm set_ghost_file DCP1 C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Nov 25 16:38:49.634 HYPERVISOR: exec_cmd: vm get_status DCP1 
+Nov 25 16:38:49.635 HYPERVISOR: exec_cmd: vm set_config DCP1 configs\i5_startup-config.cfg configs\i5_private-config.cfg 
+Nov 25 16:38:49.635 HYPERVISOR: exec_cmd: vm start DCP1 
+Nov 25 16:39:19.963 HYPERVISOR: exec_cmd: vm extract_config DCP1 

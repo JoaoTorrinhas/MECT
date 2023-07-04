@@ -1,0 +1,21 @@
+Cisco é o core e os que têm Z.
+ospf entre o core e bgp do core para os routers z
+Meter bgp nos routers q ligam aos z's, e meter como vizinhança os outros routers q tem os z's. Ambos estao na msm AS
+Só é preciso meter reservas de largura de banda entre as cidades, não é preciso meter nas ligações, por exemplo, de lisboa aos clientes.
+Fazer as configuraçoes do bgp nos routers onde estaos os z's (configuraçoes do ponto1 e ponto2 do ADVANCED TOPICS ON MP-BGP) e aplicar o ponto4 do msm guiao nos routers do core para redistribuir
+-Tunel vxlan entre y1 e y2
+Routers do core não suportam layer2 vpn nem vxlan
+
+----------
+Primeira pergunta- Seguir o guião do MPLS-VPN (with MP-BGP and VRF) a partir do exercício 13 e fazer essas configurações em cada um dos routers DCP1,DCC1,DCA2
+Segunda pergunta- Vxlan mais o tunel q é a parte do exercício 5 e 6 do guiao do mpls-vpn e dps fazer um route-map (q indica q apenas a informação q vêm dos y's entra no tunel) para entrar nesse tunel (tunel entre porto-lisboa, 5000kbits)
+Terceira Pergunta - Seguir a outra parte do guiao vxlan ->L2VPN/EVPN with VXLAN transport, O route reflector pode ser o DCP2
+Ip do lado do dentro (cliente/vpc) vai ser definido no VRF em tds os routers que ligam os Z's
+
+-Para definir os loopbacks tenho de pegar numa gama de /27 e dividir em /32 para definir os loopbaacks para cada router
+-Nas interfaces dos loopbacks tb é preciso meter OPSF
+
+Nota: Adicionar mais cores e memória aos routers vyos!
+Para definir um loopback em cisco é interface Loopback 0 -> ip address...
+
+Falta definir o ospf nas interfaces do vyos e o ospf tb nas interfaces do vyos e nas interfaces do cisco que ligam ao vyos.

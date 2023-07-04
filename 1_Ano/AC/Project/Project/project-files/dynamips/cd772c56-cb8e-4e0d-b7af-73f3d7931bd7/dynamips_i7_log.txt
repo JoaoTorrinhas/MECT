@@ -1,0 +1,43 @@
+Nov 25 16:37:16.320 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Nov 25 16:37:16.321 HYPERVISOR: Started on IP = localhost, TCP port = 50541.
+Nov 25 16:37:16.826 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 25 16:37:16.826 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips 
+Nov 25 16:37:16.826 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips
+Nov 25 16:37:16.827 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\cd772c56-cb8e-4e0d-b7af-73f3d7931bd7 
+Nov 25 16:37:16.828 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\cd772c56-cb8e-4e0d-b7af-73f3d7931bd7
+Nov 25 16:37:16.829 HYPERVISOR: exec_cmd: vm create DCA2 7 c7200 
+Nov 25 16:37:16.830 VM: VM DCA2 created.
+Nov 25 16:37:16.830 HYPERVISOR: exec_cmd: vm set_con_tcp_port DCA2 5006 
+Nov 25 16:37:16.831 HYPERVISOR: exec_cmd: c7200 get_mac_addr DCA2 
+Nov 25 16:37:16.831 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:37:16.831 HYPERVISOR: exec_cmd: vm slot_add_binding DCA2 0 0 C7200-IO-FE 
+Nov 25 16:37:16.831 HYPERVISOR: exec_cmd: vm set_disk0 DCA2 0 
+Nov 25 16:37:16.832 HYPERVISOR: exec_cmd: vm set_exec_area DCA2 64 
+Nov 25 16:37:16.832 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:37:16.832 HYPERVISOR: exec_cmd: vm set_idle_pc DCA2 0x63184dd4 
+Nov 25 16:37:16.833 HYPERVISOR: exec_cmd: vm set_ios DCA2 C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Nov 25 16:37:16.833 HYPERVISOR: exec_cmd: c7200 set_mac_addr DCA2 ca07.7728.0000 
+Nov 25 16:37:16.833 HYPERVISOR: exec_cmd: vm set_nvram DCA2 512 
+Nov 25 16:37:16.833 HYPERVISOR: exec_cmd: vm set_ram DCA2 512 
+Nov 25 16:37:16.833 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm slot_remove_binding DCA2 0 0 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm slot_add_binding DCA2 0 0 C7200-IO-2FE 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm slot_add_binding DCA2 1 0 PA-2FE-TX 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm slot_add_binding DCA2 2 0 PA-2FE-TX 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:37:16.834 HYPERVISOR: exec_cmd: vm slot_add_binding DCA2 3 0 PA-2FE-TX 
+Nov 25 16:37:18.369 HYPERVISOR: exec_cmd: nio create_udp udp-c1517013-cce3-454b-96c3-01028a70f8bd 10035 127.0.0.1 10036 
+Nov 25 16:37:18.606 HYPERVISOR: exec_cmd: vm slot_add_nio_binding DCA2 0 1 udp-c1517013-cce3-454b-96c3-01028a70f8bd 
+Nov 25 16:37:18.607 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:37:19.004 HYPERVISOR: exec_cmd: nio create_udp udp-fb019639-6235-4c74-bbd7-d2cadb44b334 10053 127.0.0.1 10054 
+Nov 25 16:37:19.005 HYPERVISOR: exec_cmd: vm slot_add_nio_binding DCA2 0 0 udp-fb019639-6235-4c74-bbd7-d2cadb44b334 
+Nov 25 16:37:19.006 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:38:49.954 HYPERVISOR: exec_cmd: vm set_ghost_status DCA2 2 
+Nov 25 16:38:49.955 HYPERVISOR: exec_cmd: vm set_ghost_file DCA2 C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Nov 25 16:38:49.956 HYPERVISOR: exec_cmd: vm get_status DCA2 
+Nov 25 16:38:49.980 HYPERVISOR: exec_cmd: vm set_config DCA2 configs\i7_startup-config.cfg configs\i7_private-config.cfg 
+Nov 25 16:38:49.981 HYPERVISOR: exec_cmd: vm start DCA2 
+Nov 25 16:39:20.313 HYPERVISOR: exec_cmd: vm extract_config DCA2 

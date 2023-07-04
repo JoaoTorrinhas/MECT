@@ -1,0 +1,46 @@
+Nov 25 16:37:14.095 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Nov 25 16:37:14.096 HYPERVISOR: Started on IP = localhost, TCP port = 50526.
+Nov 25 16:37:14.597 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 25 16:37:14.597 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips 
+Nov 25 16:37:14.597 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips
+Nov 25 16:37:14.598 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\97f063cd-6481-4125-ae4b-3f14fad0381c 
+Nov 25 16:37:14.598 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\97f063cd-6481-4125-ae4b-3f14fad0381c
+Nov 25 16:37:14.598 HYPERVISOR: exec_cmd: vm create Porto 2 c7200 
+Nov 25 16:37:14.599 VM: VM Porto created.
+Nov 25 16:37:14.600 HYPERVISOR: exec_cmd: vm set_con_tcp_port Porto 5001 
+Nov 25 16:37:14.600 HYPERVISOR: exec_cmd: c7200 get_mac_addr Porto 
+Nov 25 16:37:14.600 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:14.600 HYPERVISOR: exec_cmd: vm slot_add_binding Porto 0 0 C7200-IO-FE 
+Nov 25 16:37:14.600 HYPERVISOR: exec_cmd: vm set_disk0 Porto 0 
+Nov 25 16:37:14.601 HYPERVISOR: exec_cmd: vm set_exec_area Porto 64 
+Nov 25 16:37:14.601 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:14.601 HYPERVISOR: exec_cmd: vm set_idle_pc Porto 0x63184dd4 
+Nov 25 16:37:14.602 HYPERVISOR: exec_cmd: vm set_ios Porto C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Nov 25 16:37:14.602 HYPERVISOR: exec_cmd: c7200 set_mac_addr Porto ca02.5508.0000 
+Nov 25 16:37:14.602 HYPERVISOR: exec_cmd: vm set_nvram Porto 512 
+Nov 25 16:37:14.602 HYPERVISOR: exec_cmd: vm set_ram Porto 512 
+Nov 25 16:37:14.602 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:14.603 HYPERVISOR: exec_cmd: vm slot_remove_binding Porto 0 0 
+Nov 25 16:37:14.603 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:14.603 HYPERVISOR: exec_cmd: vm slot_add_binding Porto 0 0 C7200-IO-2FE 
+Nov 25 16:37:14.603 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:14.603 HYPERVISOR: exec_cmd: vm slot_add_binding Porto 1 0 PA-2FE-TX 
+Nov 25 16:37:14.603 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:14.603 HYPERVISOR: exec_cmd: vm slot_add_binding Porto 2 0 PA-2FE-TX 
+Nov 25 16:37:14.604 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:14.604 HYPERVISOR: exec_cmd: vm slot_add_binding Porto 3 0 PA-2FE-TX 
+Nov 25 16:37:17.780 HYPERVISOR: exec_cmd: nio create_udp udp-66dc2ef2-6557-4a31-8109-e545e09c7281 10017 127.0.0.1 10018 
+Nov 25 16:37:18.016 HYPERVISOR: exec_cmd: vm slot_add_nio_binding Porto 1 0 udp-66dc2ef2-6557-4a31-8109-e545e09c7281 
+Nov 25 16:37:18.016 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:18.284 HYPERVISOR: exec_cmd: nio create_udp udp-ce077fc8-a5dc-4e41-a39b-71184cef86e7 10023 127.0.0.1 10024 
+Nov 25 16:37:18.286 HYPERVISOR: exec_cmd: vm slot_add_nio_binding Porto 0 0 udp-ce077fc8-a5dc-4e41-a39b-71184cef86e7 
+Nov 25 16:37:18.286 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:37:18.640 HYPERVISOR: exec_cmd: nio create_udp udp-9e5cf1bb-254e-4485-9a00-3eae34ea7930 10039 127.0.0.1 10040 
+Nov 25 16:37:18.642 HYPERVISOR: exec_cmd: vm slot_add_nio_binding Porto 0 1 udp-9e5cf1bb-254e-4485-9a00-3eae34ea7930 
+Nov 25 16:37:18.642 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:38:49.338 HYPERVISOR: exec_cmd: vm set_ghost_status Porto 2 
+Nov 25 16:38:49.338 HYPERVISOR: exec_cmd: vm set_ghost_file Porto C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Nov 25 16:38:49.339 HYPERVISOR: exec_cmd: vm get_status Porto 
+Nov 25 16:38:49.339 HYPERVISOR: exec_cmd: vm set_config Porto configs\i2_startup-config.cfg configs\i2_private-config.cfg 
+Nov 25 16:38:49.339 HYPERVISOR: exec_cmd: vm start Porto 
+Nov 25 16:39:19.642 HYPERVISOR: exec_cmd: vm extract_config Porto 

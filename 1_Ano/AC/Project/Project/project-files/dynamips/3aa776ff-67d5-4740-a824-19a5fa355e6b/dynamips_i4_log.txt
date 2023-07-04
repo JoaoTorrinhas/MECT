@@ -1,0 +1,49 @@
+Nov 25 16:37:15.180 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Nov 25 16:37:15.182 HYPERVISOR: Started on IP = localhost, TCP port = 50532.
+Nov 25 16:37:15.687 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 25 16:37:15.688 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips 
+Nov 25 16:37:15.688 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips
+Nov 25 16:37:15.688 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\3aa776ff-67d5-4740-a824-19a5fa355e6b 
+Nov 25 16:37:15.689 GENERAL: working_dir=C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\3aa776ff-67d5-4740-a824-19a5fa355e6b
+Nov 25 16:37:15.689 HYPERVISOR: exec_cmd: vm create Coimbra 4 c7200 
+Nov 25 16:37:15.690 VM: VM Coimbra created.
+Nov 25 16:37:15.691 HYPERVISOR: exec_cmd: vm set_con_tcp_port Coimbra 5003 
+Nov 25 16:37:15.691 HYPERVISOR: exec_cmd: c7200 get_mac_addr Coimbra 
+Nov 25 16:37:15.691 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:15.691 HYPERVISOR: exec_cmd: vm slot_add_binding Coimbra 0 0 C7200-IO-FE 
+Nov 25 16:37:15.691 HYPERVISOR: exec_cmd: vm set_disk0 Coimbra 0 
+Nov 25 16:37:15.691 HYPERVISOR: exec_cmd: vm set_exec_area Coimbra 64 
+Nov 25 16:37:15.692 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:15.692 HYPERVISOR: exec_cmd: vm set_idle_pc Coimbra 0x63184dd4 
+Nov 25 16:37:15.692 HYPERVISOR: exec_cmd: vm set_ios Coimbra C:/Users/jptor/GNS3/images/IOS/c7200-advipservicesk9-mz.152-4.S5.image 
+Nov 25 16:37:15.692 HYPERVISOR: exec_cmd: c7200 set_mac_addr Coimbra ca04.1c4c.0000 
+Nov 25 16:37:15.693 HYPERVISOR: exec_cmd: vm set_nvram Coimbra 512 
+Nov 25 16:37:15.693 HYPERVISOR: exec_cmd: vm set_ram Coimbra 512 
+Nov 25 16:37:15.693 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:15.693 HYPERVISOR: exec_cmd: vm slot_remove_binding Coimbra 0 0 
+Nov 25 16:37:15.693 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:15.693 HYPERVISOR: exec_cmd: vm slot_add_binding Coimbra 0 0 C7200-IO-2FE 
+Nov 25 16:37:15.694 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:15.694 HYPERVISOR: exec_cmd: vm slot_add_binding Coimbra 1 0 PA-2FE-TX 
+Nov 25 16:37:15.694 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:15.694 HYPERVISOR: exec_cmd: vm slot_add_binding Coimbra 2 0 PA-2FE-TX 
+Nov 25 16:37:15.694 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:15.694 HYPERVISOR: exec_cmd: vm slot_add_binding Coimbra 3 0 PA-2FE-TX 
+Nov 25 16:37:17.211 HYPERVISOR: exec_cmd: nio create_udp udp-650b7e35-7d9d-48d4-a3cd-b1fc7521537b 10005 127.0.0.1 10006 
+Nov 25 16:37:17.456 HYPERVISOR: exec_cmd: vm slot_add_nio_binding Coimbra 0 0 udp-650b7e35-7d9d-48d4-a3cd-b1fc7521537b 
+Nov 25 16:37:17.457 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:17.489 HYPERVISOR: exec_cmd: nio create_udp udp-f79dea58-e569-46f0-96e2-341eb1630d0a 10009 127.0.0.1 10010 
+Nov 25 16:37:17.492 HYPERVISOR: exec_cmd: vm slot_add_nio_binding Coimbra 0 1 udp-f79dea58-e569-46f0-96e2-341eb1630d0a 
+Nov 25 16:37:17.492 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:17.773 HYPERVISOR: exec_cmd: nio create_udp udp-e8c42725-9b31-4675-9c42-f5d54448ce2a 10015 127.0.0.1 10016 
+Nov 25 16:37:17.775 HYPERVISOR: exec_cmd: vm slot_add_nio_binding Coimbra 1 0 udp-e8c42725-9b31-4675-9c42-f5d54448ce2a 
+Nov 25 16:37:17.775 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:37:18.319 HYPERVISOR: exec_cmd: nio create_udp udp-a4045cdd-ee2c-4e5b-bb5f-67d037ff8103 10027 127.0.0.1 10028 
+Nov 25 16:37:18.322 HYPERVISOR: exec_cmd: vm slot_add_nio_binding Coimbra 1 1 udp-a4045cdd-ee2c-4e5b-bb5f-67d037ff8103 
+Nov 25 16:37:18.322 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:38:49.631 HYPERVISOR: exec_cmd: vm set_ghost_status Coimbra 2 
+Nov 25 16:38:49.632 HYPERVISOR: exec_cmd: vm set_ghost_file Coimbra C:\Users\jptor\Desktop\Mestrado\4_Ano\AC\Project\Project\project-files\dynamips\c7200-advipservicesk9-mz.152-4.S5.image-512.ghost 
+Nov 25 16:38:49.633 HYPERVISOR: exec_cmd: vm get_status Coimbra 
+Nov 25 16:38:49.634 HYPERVISOR: exec_cmd: vm set_config Coimbra configs\i4_startup-config.cfg configs\i4_private-config.cfg 
+Nov 25 16:38:49.634 HYPERVISOR: exec_cmd: vm start Coimbra 
+Nov 25 16:39:19.963 HYPERVISOR: exec_cmd: vm extract_config Coimbra 

@@ -1,0 +1,436 @@
+Exercício 1
+------------
+
+DCC1
+
+conf ter
+ip vrf VPN-1
+rd 200:1
+route-target export 200:1
+route-target import 200:1
+interface FastEthernet0/0
+ip vrf forwarding VPN-1
+ip address 10.0.1.100 255.255.255.0
+end
+write
+
+conf ter
+router bgp 43100
+bgp router-id 10.10.10.10 !router-id must be defined
+neighbor 10.0.1.74 remote-as 43100
+neighbor 10.0.1.69 remote-as 43100
+neighbor 10.0.1.74 update-source Loopback0
+neighbor 10.0.1.69 update-source Loopback0
+address-family vpnv4
+neighbor 10.0.1.74 activate
+neighbor 10.0.1.69 activate
+neighbor 10.0.1.74 send-community both
+neighbor 10.0.1.69 send-community both
+address-family ipv4 vrf VPN-1
+redistribute connected
+end
+write 
+
+Não é:
+conf ter
+ip route vrf VPN-1 0.0.0.0 0.0.0.0 10.0.0.33 global
+end
+write
+
+
+conf ter
+ip route 10.0.1.0 255.255.255.0 FastEthernet0/0
+router ospf 1
+redistribute static subnets
+end
+write
+
+-----------------------
+DCP1
+
+conf ter
+ip vrf VPN-1
+rd 200:1
+route-target export 200:1
+route-target import 200:1
+interface FastEthernet0/0
+ip vrf forwarding VPN-1
+ip address 10.0.2.100 255.255.255.0
+end
+write
+
+conf ter
+router bgp 43100
+bgp router-id 11.11.11.11 !router-id must be defined
+neighbor 10.0.1.74 remote-as 43100
+neighbor 10.0.1.68 remote-as 43100
+neighbor 10.0.1.74 update-source Loopback0
+neighbor 10.0.1.68 update-source Loopback0
+address-family vpnv4
+neighbor 10.0.1.74 activate
+neighbor 10.0.1.68 activate
+neighbor 10.0.1.74 send-community both
+neighbor 10.0.1.68 send-community both
+address-family ipv4 vrf VPN-1
+redistribute connected
+end
+write
+
+Não é:
+conf ter
+ip route vrf VPN-1 0.0.0.0 0.0.0.0 10.0.0.161 global
+end
+write
+
+conf ter
+ip route 10.0.2.0 255.255.255.0 FastEthernet0/0
+router ospf 1
+redistribute static subnets
+end
+write
+
+--------------
+DCA2
+
+conf ter
+ip vrf VPN-1
+rd 200:1
+route-target export 200:1
+route-target import 200:1
+interface FastEthernet0/0
+ip vrf forwarding VPN-1
+ip address 10.0.3.100 255.255.255.0
+end
+write
+
+conf ter
+router bgp 43100
+bgp router-id 12.12.12.12 !router-id must be defined
+neighbor 10.0.1.68 remote-as 43100
+neighbor 10.0.1.69 remote-as 43100
+neighbor 10.0.1.68 update-source Loopback0
+neighbor 10.0.1.69 update-source Loopback0
+address-family vpnv4
+neighbor 10.0.1.68 activate
+neighbor 10.0.1.69 activate
+neighbor 10.0.1.68 send-community both
+neighbor 10.0.1.69 send-community both
+address-family ipv4 vrf VPN-1
+redistribute connected
+end
+write
+
+Não é:
+conf ter
+ip route vrf VPN-1 0.0.0.0 0.0.0.0 10.0.0.193 global
+end
+write
+
+conf ter
+ip route 10.0.3.0 255.255.255.0 FastEthernet0/0
+router ospf 1
+redistribute static subnets
+end
+write
+
+-----------------------
+
+Exercício2
+---------
+
+DCL1
+
+configure
+set interfaces ethernet eth2 vif 20 !É 20 e 30 em vez de 2 e 3?
+set interfaces ethernet eth2 vif 30
+commit
+save
+
+configure
+set interfaces vxlan vxlan102 vni 102      !Seria vxlan103 vni 103
+set interfaces vxlan vxlan102 mtu 1500
+set interface vxlan vxlan102 remote 10.0.1.1
+set interfaces vxlan vxlan103 vni 103
+set interfaces vxlan vxlan103 mtu 1500
+set interface vxlan vxlan103 remote 10.0.1.1 !
+set interfaces vxlan vxlan102 vni 102
+set interfaces vxlan vxlan102 mtu 1500
+set interface vxlan vxlan102 remote 10.0.1.33 !
+set interfaces vxlan vxlan103 vni 103
+set interfaces vxlan vxlan103 mtu 1500
+set interface vxlan vxlan103 remote 10.0.1.33 !
+commit
+save
+
+configure
+set interfaces bridge br102 member interface 'eth2.20' 
+set interfaces bridge br102 member interface 'vxlan102'
+set interfaces bridge br103 member interface 'eth2.30' !
+set interfaces bridge br103 member interface 'vxlan130 !
+commit
+save
+
+New confs (Confs CERTAS):
+
+configure
+set interfaces ethernet eth2 vif 20 
+set interfaces ethernet eth2 vif 30
+commit
+save
+configure
+set interfaces vxlan vxlan130 vni 130
+set interfaces vxlan vxlan130 mtu 1500
+set interface vxlan vxlan130 remote 10.0.1.1
+set interfaces vxlan vxlan120 vni 120      
+set interfaces vxlan vxlan120 mtu 5000
+set interface vxlan vxlan120 remote 10.0.1.1
+commit
+save
+configure
+set interfaces bridge br120 member interface 'eth2.20' 
+set interfaces bridge br120 member interface 'vxlan120'
+set interfaces bridge br130 member interface 'eth2.30' 
+set interfaces bridge br130 member interface 'vxlan130' 
+commit
+save 
+
+-----------
+DCP2
+
+configure
+set interfaces ethernet eth2 vif 20 	!É 20 e 30 em vez de 2 e 3?
+!set interfaces ethernet eth2 vif 30
+commit
+save
+
+configure
+set interfaces vxlan vxlan102 vni 102
+set interfaces vxlan vxlan102 mtu 1500
+set interface vxlan vxlan102 remote 10.0.0.225
+!set interfaces vxlan vxlan103 vni 103
+!set interfaces vxlan vxlan103 mtu 1500
+!set interface vxlan vxlan103 remote 10.0.0.225
+!set interfaces vxlan vxlan102 vni 102
+!set interfaces vxlan vxlan102 mtu 1500
+!set interface vxlan vxlan102 remote 10.0.1.33
+!set interfaces vxlan vxlan103 vni 103
+!set interfaces vxlan vxlan103 mtu 1500
+!set interface vxlan vxlan103 remote 10.0.1.33
+commit
+save
+
+configure
+!set interfaces bridge br102 member interface 'eth2.20'
+!set interfaces bridge br102 member interface 'vxlan102'
+set interfaces bridge br103 member interface 'eth2.30' !Vlan30
+set interfaces bridge br103 member interface 'vxlan103
+commit
+save
+
+New confs (Confs CERTAS):
+configure
+set interfaces ethernet eth2 vif 20 
+set interfaces ethernet eth2 vif 30
+commit
+save
+configure
+set interfaces vxlan vxlan120 vni 120
+set interfaces vxlan vxlan120 mtu 1500
+set interface vxlan vxlan120 remote 10.0.0.225
+set interfaces vxlan vxlan130 vni 130
+set interfaces vxlan vxlan130 mtu 5000
+set interface vxlan vxlan130 remote 10.0.0.225
+commit
+save
+configure
+set interfaces bridge br130 member interface 'eth2.30' !Vlan30
+set interfaces bridge br130 member interface 'vxlan130'
+set interfaces bridge br120 member interface 'eth2.20'
+set interfaces bridge br120 member interface 'vxlan120'
+commit
+save
+
+
+------------
+DCA1 (ESTE NÃO VAI SER PRECISO PQ NÃO EXISTE CLIENTE Y3)
+
+configure
+set interfaces ethernet eth2 vif 20 !É 20 e 30 em vez de 2 e 3?
+set interfaces ethernet eth2 vif 30
+commit
+save
+
+configure
+set interfaces vxlan vxlan102 vni 102
+set interfaces vxlan vxlan102 mtu 1500
+set interface vxlan vxlan102 remote 10.0.1.1
+set interfaces vxlan vxlan103 vni 103
+set interfaces vxlan vxlan103 mtu 1500
+set interface vxlan vxlan103 remote 10.0.1.1
+set interfaces vxlan vxlan102 vni 102
+set interfaces vxlan vxlan102 mtu 1500
+set interface vxlan vxlan102 remote 10.0.0.225
+set interfaces vxlan vxlan103 vni 103
+set interfaces vxlan vxlan103 mtu 1500
+set interface vxlan vxlan103 remote 10.0.0.225
+commit
+save
+
+configure
+set interfaces bridge br102 member interface 'eth1.20'
+set interfaces bridge br102 member interface 'vxlan102'
+set interfaces bridge br103 member interface 'eth1.30'
+set interfaces bridge br103 member interface 'vxlan103
+commit
+save
+
+------------
+Porto
+
+!Fazer estas duas configurações tb no router de coimbra
+config ter
+routers ospf 1
+mpls traffic-eng area 0
+mpls traffic-eng router-id Loopback 0
+
+config term
+mpls ip
+ip cef	!Adicionei dps pq tb tinha nas interfaces
+mpls traffic-eng tunnels
+interface fx/x
+no mpls ip
+ip rsvp bandwidth 10000 10000 !Em cada interface
+mpls traffic-eng tunnels !Em cada interface
+--
+
+config term
+interface tunnel 1
+ip unnumbered Loopback0
+tunnel destination 10.0.1.66
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng bandwidth 5000
+tunnel mpls traffic-eng path-option 1 explicit name path1
+ip explicit-path name path1 enable
+next-address 10.0.0.65 !Coimbra
+next-address 10.0.0.1 !Lisboa
+end
+write
+
+------------
+Lisboa
+
+config term
+interface tunnel 1
+ip unnumbered Loopback0
+tunnel destination 10.0.1.71
+tunnel mode mpls traffic-eng
+tunnel mpls traffic-eng bandwidth 5000
+tunnel mpls traffic-eng path-option 1 explicit name path1
+ip explicit-path name path1 enable
+next-address 10.0.0.30 !Coimbra
+next-address 10.0.0.94 !Porto
+end
+write
+
+-----------------------
+
+Exercício3
+---------
+
+DCP2 (Route Reflector)
+
+!Ja meti estas
+configure
+set protocols bgp system-as 43100
+set protocols bgp address-family l2vpn-evpn advertise-all-vni
+set protocols bgp parameters router-id 10.0.1.70
+set protocols bgp neighbor 10.0.1.65 peer-group evpn
+set protocols bgp neighbor 10.0.1.73 peer-group evpn
+set protocols bgp peer-group evpn update-source dum0
+set protocols bgp peer-group evpn remote-as 43100
+set protocols bgp peer-group evpn address-family l2vpn-evpn nexthop-self
+set protocols bgp peer-group evpn address-family l2vpn-evpn route-reflector-client
+commit
+save
+
+configure
+set interfaces vxlan vxlan101 source-address 10.0.1.70
+set interfaces vxlan vxlan101 vni 101
+set interfaces vxlan vxlan101 mtu 1500
+!set interfaces vxlan vxlan102 source-address 10.0.1.70
+!set interfaces vxlan vxlan102 vni 102
+!set interfaces vxlan vxlan102 mtu 1500
+set interfaces bridge br101 address 10.2.1.100/24
+set interfaces bridge br101 description 'customer xTwo'
+set interfaces bridge br101 member interface eth1
+set interfaces bridge br101 member interface vxlan101
+commit
+save
+
+---------
+DCL1
+
+(Ip's das bridges foram alterados, ver no show configuration ou no GNS ao lado do VPC)
+
+!Ja meti estas
+configure
+set protocols bgp system-as 43100
+set protocols bgp address-family l2vpn-evpn advertise-all-vni
+set protocols bgp parameters router-id 10.0.1.65
+set protocols bgp neighbor 10.0.1.70 peer-group evpn
+set protocols bgp peer-group evpn update-source dum0
+set protocols bgp peer-group evpn remote-as 43100
+set protocols bgp peer-group evpn address-family l2vpn-evpn nexthop-self
+commit
+save
+
+configure
+set interfaces vxlan vxlan101 source-address 10.0.1.65
+set interfaces vxlan vxlan101 vni 101
+set interfaces vxlan vxlan101 mtu 1500
+set interfaces bridge br101 address 10.2.0.100/24
+set interfaces bridge br101 description 'customer xOne'
+set interfaces bridge br101 member interface eth1
+set interfaces bridge br101 member interface vxlan101
+commit
+save
+
+---------
+DCA1
+
+!Ja meti estas
+configure
+set protocols bgp system-as 43100
+set protocols bgp address-family l2vpn-evpn advertise-all-vni
+set protocols bgp parameters router-id 10.0.1.73
+set protocols bgp neighbor 10.0.1.70 peer-group evpn
+set protocols bgp peer-group evpn update-source dum0
+set protocols bgp peer-group evpn remote-as 43100
+set protocols bgp peer-group evpn address-family l2vpn-evpn nexthop-self
+commit
+save
+
+configure
+set interfaces vxlan vxlan101 source-address 10.0.1.73
+set interfaces vxlan vxlan101 vni 101
+set interfaces vxlan vxlan101 mtu 1500
+set interfaces bridge br101 address 10.2.2.100/24
+set interfaces bridge br101 description 'customer xThree'
+set interfaces bridge br101 member interface eth2
+set interfaces bridge br101 member interface vxlan101
+commit
+save
+
+----------
+10.0.0.66/27 -> IP da VM que está a monitorizar a rede
+sudo ip addr add 10.0.0.66/27 dev enp0s3 -> comando para adicionar o IP à VM
+
+----------
+Traps:
+
+conf ter
+snmp-server enable traps syslog 
+snmp-server host 10.0.0.66 version 2c myRouter0
+
+
+
