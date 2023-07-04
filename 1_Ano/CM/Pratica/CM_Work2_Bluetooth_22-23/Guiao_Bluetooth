@@ -1,0 +1,134 @@
+
+host e o controller são no msm device (master). Onde o controller é qualquer coisa do bluetooh q vem de fora
+
+
+4.
+	-Protocols: HCI_CMD e HCI_EVT
+	-Actors involved: host e controller
+	-direção: Por exemplo, no primeiro pacote, sent Reset, o host envia para o controller e o controller responde com um Rcvd Command Complete Reset.
+	
+5.
+	-O host envia sempre uma mensagem sent "qualquer coisa" e o controller responde com a informação de "qualquer coisa"
+	
+6.
+	-Inicialmente é um enviado um sent reset para certificar-se q o processo está a começar do inicio
+	
+7.
+	-Host envia um sent Write inquiry e o controller responde com um rcvd complete (Write inquiry mode)
+	-Pacotes trocados: sent Write inquiry, rcvd command complete (write inquiry mode), sent read inquiry response tx power level, rcvd command complete (read inquiry response tx power level), sent inquiry, rcvd inquiry complete
+	-O inquiry é o master a fazer scanning de outros dispositivos
+	-No fundo o host (zona aplicacional) diz ao radio para fazer o inquiry, descoberta, de dispositivos bluetooh
+
+12.
+	a)
+	-Protocols: ATT, HCI_CMD, HCI_EVT, SMP, L2CAP
+	-Type:
+		-ATT type-> 0x02 ACL DATA
+		-HCI_CMD-> 0x01 HCI COMMAND
+		-HCI_EVT-> 0x04 HCI EVENT
+		-L2CAP-> 0X02 ACL DATA
+		-SMP-> 0x02 ACL DATA
+	-Falta o 0x03, synchronous data
+	
+	b) Source:IntelCore_71:69:f1... ;	Destination:fb:ac:95:ae:20...
+	   Source:fb:ac:95:ae:20...;	Destination:IntelCore_71:69:f1...
+	   Source: host		;	Destination: Controller
+	   Source: Controller		;	Destination: host
+	   
+13.
+	a)
+		-LE Create Connection aparece imediatamente antes de ser feito o pairing (VER)
+		
+	b)
+		-O protocolo usado é o SMP
+		
+	c)
+		-Também é possível ver a encriptação, na frame LE Start Encryption
+		
+		
+14.
+	-As frames trocadas usam o protocolo ATT
+	
+18.
+	a)
+		-AVDTP, AVRCP, HCI_CMD, HCI_EVT, HFP, L2CAP, RFCOMM, SBC, SDP
+		
+	b)
+		-AVDTP:
+			-HCI H4
+			-HCI ACL PACKET
+			-L2CAP
+			-AVDTP
+		-AVRCP:
+			-HCI H4
+			-HCI ACL PACKET
+			-L2CAP
+			-AVCTP
+			-AVRCP
+			
+		-HFP: Define um conjunto de funções de modo que um telefone celular possa ser usado em conjunto com um dispositivo Hands-Free (por exemplo, instalado no carro ou representado por um dispositivo vestível, como um fone de ouvido)
+			-HCI H4
+			-HCI ACL PACKET
+			-L2CAP
+			-RFCOMM
+			-HFP
+			
+		-L2CAP:
+			-HCI H4
+			-HCI ACL PACKET
+			-L2CAP
+		
+		-RFCOMM:
+			-HCI H4
+			-HCI ACL PACKET
+			-L2CAP
+			-RFCOMM
+			
+		-SBC:  No processamento de sinal, a sub-band coding é qualquer forma de codificação de transformação que divide um sinal em várias bandas (na captura divide em varios frames) de frequência diferentes, normalmente usando uma transformada rápida de Fourier e codifica cada uma independentemente.
+			-HCI H4
+			-HCI ACL PACKET
+			-L2CAP
+			-A2DP
+			-real-time transport protocol
+			-Bluetooth SBC Codec
+			
+		-SDP:
+			-HCI H4
+			-HCI ACL PACKET
+			-L2CAP
+			-SDP
+			
+19.
+	-O pairing é feito no inicio, imediatamente antes de haver a geração da link key
+	
+27.
+	-Saiu do modo sniff e entrou no modo active
+
+28.
+	-Como se trata de uma ligação é preciso haver sincronização, (acho eu)
+		
+29.
+	b)
+		-Synchronous frames
+
+30.
+	-Talvez no lower layer stack, nao sei
+		
+31.
+	-Chamada termina e volta a entar no modo sniff
+	
+35.
+	-Ao iniciar o streaming nos phones recebe um pacote -> rcvd Connection oriented channel
+	
+37.
+	-AVDTP, AVRCP, HCI H4, HCI_EVT, HFP, L2CAP, RFCOMM, SBC, SDP
+	
+38.
+	-O dispositivo de entrada é adicionado e é visto o pacote -> sent setup synchronous connection
+	
+	
+
+	
+			
+		
+		

@@ -1,0 +1,45 @@
+-Dentro dos 2.4Ghz cada canal tem a sua frequencia propria
+-Quando se fixa um canal, deixa de se ver as outras frequencias dos outros canais
+
+4.
+	-No canal 5, ele está no meio dos dois canais, por isso há sobreposição do ssid do canal 3 e do canal7, aparecem os dois.
+	
+5.
+	-Type management - 0
+	-Subtype- 8
+
+7.
+	-Canal 1, freq-2412Mhz
+	-Canal 6, freq-2437MHZ
+	-É suposto a frequencia ser diferente pq os canais são diferentes
+	-Na frequencia 5.5hz não há tantos beacons pq a concorrencia é menor
+
+8.
+	O campo type no wireshark muda consoante o q se mete no filtro de visualizaçao	
+
+9.
+	-se for type = 1, o pc source envia tramas de controlo (CTS, clear to send, request to send, por exemplo) para o destino
+	-se for type = 2, o pc source envia tramas de dados para o pc destino
+	
+10.
+	-Aproximadamente 100ms, subtrair uma trama de cima com a imediatamente abaixo, por exemplo.
+	
+13.
+	-279<->286
+	
+15.
+	-DHCP ACK, source -> 10.0.2.1; destination -> 10.0.2.123
+
+31.
+	-Sem o -R o src é o 10.0.1.182 e o dst é o 10.0.1.2 (servidor) é o client a source para o servidor. Com o -R é o servidor para o cliente
+	
+32.
+	-142, 116, 106, 110 microsegundos
+	-Na 5Ghz conseguimos mais desempenho
+	-Na de 2.4Ghz houve tranferencia de 25.4MBytes enquanto que na de 5Ghz houve tranferencia de 94.4MBytes, ou seja, tem maior desempenho
+	
+
+NOTA WIFI2: Rasperry py nao faz as coisas em condições
+
+
+

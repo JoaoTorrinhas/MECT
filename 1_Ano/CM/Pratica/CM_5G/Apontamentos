@@ -1,0 +1,54 @@
+1.
+	-5G Core:
+	->smfcfg.yaml
+		-> MCC = 001 (Mobile country code 3 digits string ,digits :0-9)
+		-> MNC = 01 (Mobile network code 2 or 3 digits string, digits 0-9)
+		
+	
+	->amfcfg.yaml
+		-> MCC = 001 (Mobile country code 3 digits string ,digits :0-9)
+		-> MNC = 01 (Mobile network code 2 or 3 digits string, digits
+		-> TAC = 1 e TAC = 2 (tracking area code)
+	
+	->upfcfg.yaml
+	
+	5g Ran:
+	->tem o MCC E MNC e o gNB1 e gNB2
+	
+	5G UES:
+	->MCC e MNC e SUPi's
+	
+2.5
+	-O trafico que vemos, para esta interface, no wireshark é tráfego normal de LAN
+	
+2.6
+	-São trocados pacotes TCP e ARP
+	
+2.7
+	-TCP, ARP, HTTP2
+	
+2.8
+	-Os dialogos são trocados inicialmente através dos protocols MDNS, ICMPv6 e PFCP.
+	
+3.4
+	-Entidades envolvidas:
+		- ANF-N2 e gNB1-N2 comunicam através do protocolo SCTP e NGAP
+		- SMF-N4 e UPF-N4 comunicam através de PFCP
+	-Os valores são iguais aos do ficheiro de configuração	
+	
+3.6
+	-Agr as entidades q passam a comunicar são as gNB2-N2 e AMFN2
+	
+4.5
+	-ARP, HTTP2, NGAP, PFCP, SSL, TCP, UDP, SCTP
+	
+4.6
+	-
+	
+5.4
+	-TEID são os id's do tunel, como os tuneis sao em direções opostas eles podem ter o msm TEID
+	
+	
+	
+	
+	
