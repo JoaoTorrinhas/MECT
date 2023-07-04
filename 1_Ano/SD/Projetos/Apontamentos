@@ -1,0 +1,178 @@
+General Repository of information -> Cada vez q é feito um movimento tem de ser escrito num ficheiro de LOG's. É uma necessidade para fazer o debuging e ver se o problema está a correr como pretendido.
+
+-Caracterizar os momentos de interação entre entidades
+-Descrever o ciclo de vida das entidades (Diagrama de estados)
+
+
+Diagrama de estados do problema (Descrição MT):
+-Face à informação que o MT tem, vai decidir o que fazer.
+-Em seguida, vai criar um grupo de assalto (Atribuir uma sala do museu ao grupo de assalto, a seguir seleciona 3 ladroes para incorporar esse grupo de assalto)
+-Os ladrões estão no terreno à espera, eles estão à espera na fila e o MT vai chamar os 3 primeiros ladões da fila.
+-Aguarda que os 3 ladrões que acordou estejam prontos, qnd o último ladrão estiver pronto, acorda o MT e dá ordem de partida para o assalto (sendAssaultParty).
+-Quando não haver mais quadros, acorda os ladrões na fila e informa-os do montante que roubaram.
+-
+
+Diagrama de estados do problema (Descrição OT):
+-O último a chegar vai acordar a MT.
+-Quando o ladrão tiver a tela vai até à MT, deixa a tela e volta para a fila de concentração e ele bloqueia.
+
+Legenda:
+1,2,3 são os ladrões
+0 é a posição 0
+(A) é a agilidade
+
+			       15
+	T ----------------- Distância------------------- Sala Museu	
+
+(A)
+6	1 0 -> 3 (Moveu 3 posições e acorda o próximo) -> 9 -> 13 -> 15 (Bloqueia2)
+4	2 0 -> 4 (Não pode avançar mais, bloqueia e acorda o próximo) -> 8 -> 12 -> 15 (Bloqueia3)
+3	3 0 -> 2 -> 5 -> 7 -> 10 -> 11 -> 14 -> 15 (bloqueia1)
+
+
+
+
+1.
+	História que o professor descreveu (enunciado)
+
+2.
+	-> Atributos relevantes para a MT e aos outros ladrões
+	MT:
+		-O estado em que ela se encontra
+		
+		
+	Ladrões:
+		-Agilidade
+		-id (Nome)
+		-Em que lugar ele se encontra no ciclo de vida (ESTADO)
+		
+	-> CICLO DE VIDA DO MT E DOS OT'S:
+	
+	MASTER THIEF:
+		
+		controlSite.getAssaultId() -> dá o ID do grupo de assalto	
+		void run(){
+			char operation;
+			controlSite.startOfOperations s;
+			while(operation = controlSite.apraiseSite(s) != 'E'){
+				switch(operation){
+				case 'p': 
+					concentrationSite.prepateAssaultParty(controlSite.getAssaultId(), controlSite.getRoomId());
+					assGroup(controlSite.getAssaultId()).sendAssaultParty();
+					break;
+				case 'r':
+					controlSite.takeARest();
+					controlSite.collectACanvas();
+					break;
+				}
+			}
+			concentrationSite.sumUpResults(controlSite.getNumberOfCanvas());
+		}
+	
+	ORDINARY THIEF:
+		
+		void run(){
+			//char op;
+			while(controlSite.amINeeded()){
+				assaultPartyID = concetrationSite.prepareExcursion()
+				while(assGroupAssault[assaultPartyID].crawlIn())
+				museum.rollACanvas()
+				museum.reverseDirection()
+				while(assGroupAssault[assaultID].crawlOut())
+				collectionSite.handACanvas()
+			}
+		}
+
+		
+3.
+	COLLECTION SITE:
+		
+		- Tb vai ser necessária uma FIFO para escolher qual dos 3 ladroes é q vai receber a tela/canvas
+		- startOperations() - MT - V 
+		- takeARest() - MT - V
+		- appraiseSit() - MT - V 
+		- handACanvas() - MT -  V
+		- collectACanvas() - MT - V 
+		- sumUpResults() -MT - V
+		
+	ASSAULT PARTY:
+		
+		- roomID - V
+		- assaultPartyID - V
+		- int []assGroupAssault -> array com os id's dos dois grupos de assalto
+		- sendAssaultParty() - MT - V
+		- crawlIn() - OT - V
+		- crawlOut() - OT - V
+		- reverseDirection() -OT
+		
+	MUSEUM:
+	
+		- int numRooms
+		- int [] Rooms -> Array com os rooms onde cada Room tem o número de pinturas e a distância ao mesmo.
+		- roolACanvas() - OT - V
+		- getRoomDistance(roomID) - V
+		- getPaintingNumbers(roomID) - V
+		- reverseDirection(OT thief) - V
+	
+	CONCENTRATION SITE:
+		
+		- FIFO com os id's dos ladroes e acordar 3 ladroes desses
+		- int numThiefs
+		- int[] thiefsAvailabelID;
+		- amINeeded() - OT - V
+		- prepareExcursion() - OT - V
+		- prepareAssaultParty(getAssaultID(), getRoomID()) - MT - V
+	 	
+	 	
+General Repository:
+-> Serve para debugging, ver se ocurreram deadlocks
+-> Fundamental para vermos qual foi a evolução das operações, serve como um arquivo fotográfico
+
+Sempre q for feito uma alteração qualquer, por exemplo, setMasterThiefState tem de ser registado no general repository.
+
+
+Algoritmo do CRAWL_IN:
+
+thieves -> * * *
+
+do{
+	sit = whereAmI();
+	switch(sit):
+	
+	case FRONT:
+	
+	
+	case MIDDLE:
+	
+	
+	case BACK:	
+
+
+}while(canICrawl());
+
+
+-------------------------------Projeto2-------------------------------
+
+MESSAGE:
+Nota: Deve importar o tipo serializable
+	-type (identifica o método)
+	-Variaveis (identifica os parametros a passar conjuntamente para tds os métodos, devem ser de tipos primitivos)
+	
+PROXY AGENT:
+	-É um tipo derivado de master thief e ordinary thief através de uma interface
+	-A interface do PROXY AGENT vai conter as funções de cada master thief e ordinary thief.
+	
+MAIN:
+	-Instanciar a regiao partilhada
+	-Instanciar o serviço
+	-Por fim, ficar à escuta
+	
+PORTS:
+	-Cada grupo vai ter 10 ports
+	-Os ports vão ser entre 22100-22199
+	-Grupo1: 22100-22109
+	
+
+
+
+
