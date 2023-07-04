@@ -1,0 +1,394 @@
+
+import sys
+from croblink import *
+from math import *
+import xml.etree.ElementTree as ET
+
+CELLROWS=7
+CELLCOLS=14
+
+class MyRob(CRobLinkAngs):
+    def __init__(self, rob_name, rob_id, angles, host):
+        CRobLinkAngs.__init__(self, rob_name, rob_id, angles, host)
+
+    # In this map the center of cell (i,j), (i in 0..6, j in 0..13) is mapped to labMap[i*2][j*2].
+    # to know if there is a wall on top of cell(i,j) (i in 0..5), check if the value of labMap[i*2+1][j*2] is space or not
+    def setMap(self, labMap):
+        self.labMap = labMap
+
+    def printMap(self):
+        for l in reversed(self.labMap):
+            print(''.join([str(l) for l in l]))
+            
+    def updateXYTeta(self, outR, outL, last_X, last_Y, last_Teta):
+        x = 0
+        y = 0
+        lin = 0
+        teta = 0
+        rot = 0
+        
+        lin = (outL + outR)/2
+        
+        x = last_X + (lin*cos(last_Teta))
+        y = last_Y + (lin*sin(last_Teta))
+        rot = outR-outL
+        teta = last_Teta + rot
+        
+        global lastX, lastY, lastTeta
+        lastX = x
+        lastY = y
+        lastTeta = teta
+        
+        return x, y, teta
+        
+        
+    def updateDriveMotors(self, last_outLeft, inL, last_outRight, inR):
+        outLeft = 0
+        outRight = 0
+        
+        outLeft = (inL + last_outLeft) / 2
+        outRight = (inR + last_outRight) / 2
+        
+        global last_outL, last_outR
+        last_outL = outLeft
+        last_outR = outRight
+        
+        return outLeft, outRight
+    
+    def correctXOnxPar(self, x, bussola, xpar): #Corrigir o valor do x nas interseçoes 
+        correctX = 0
+        #xSensor = x + 0.438
+        interval = [xpar-0.1, xpar+0.1] #antes estava 1
+        if bussola >= -30 and bussola <= 30:    #Ir da esquerda para a direita
+            xSensor = x + 0.438
+            if xSensor < interval[0]:
+                xSensor = interval[0]
+                correctX = xSensor - 0.438
+                print("CORRIGIU X!!!")
+            elif xSensor >= interval[0]:
+                correctX = x
+                print("X FICA IGUAL!!!")
+        elif bussola >=-160 or bussola >= 160:  #Ir da direita para a esquerda
+            xSensor = x - 0.438
+            if xSensor > interval[1]:   #0 
+                xSensor = interval[1]   #0
+                correctX = xSensor + 0.438
+                print("CORRIGIU X!!!")
+            elif xSensor <= interval[1]:    #0
+                correctX = x
+                print("X FICA IGUAL!!!")
+        
+        print("CORRECT_X", correctX)
+        
+        return correctX
+    
+    def correctYOnyPar(self, y, bussola, ypar): #Corrigir o valor no y nas interseções
+        correctY = 0
+        interval = [ypar-0.1, ypar+0.1] # antes estava 1
+        if bussola >= 60 and bussola <= 115:    #Ir para cima
+            ySensor = y + 0.438
+            if ySensor < interval[0]:
+                ySensor = interval[0]
+                correctY = ySensor - 0.438
+                print("CORRIGIU Y!!!")
+            elif ySensor >= interval[0]:
+                correctY = y
+                print("Y FICA IGUAL!!!")
+        elif bussola <= -60 and bussola >= -115: #Ir para baixo
+            ySensor = y - 0.438
+            if ySensor > interval[1]:   #0
+                ySensor = interval[1]   #0
+                correctY = ySensor + 0.438
+                print("CORRIGIU Y!!!")
+            elif ySensor <= interval[1]:    #0
+                correctY = y
+                print("Y FICA IGUAL!!!")
+                
+        print("CORRECT_Y", correctY)
+                
+        return correctY
+    
+    def calculateClosestPair(self, x, y, bussola): #Calcular o par mais proximo
+        closestPairX = 0
+        closestPairY = 0
+        closestPairXaux = -1
+        closestPairYaux = -1
+        sensorX = 0
+        sensorY = 0
+        #ALTERAR ISTO
+        if bussola >= -35 and bussola <= 35: #horizontal da esquerda para a direita
+            sensorX = x + 0.438
+            closestPairXaux = round(sensorX,0)
+        elif bussola <= -155 or bussola >= 155: #horizontal da direita para a esquerda
+            sensorX = x - 0.438
+            closestPairXaux = round(sensorX,0)
+        elif bussola >= 65 and bussola <= 115:  #vertical de baixo para cima
+            sensorY = y + 0.438
+            closestPairYaux = round(sensorY,0)
+        elif bussola >= -115 and bussola <= -65:    #vertical de cima para baixo
+            sensorY = y - 0.438
+            closestPairYaux = round(sensorY,0)
+            
+        
+        if closestPairXaux % 2 == 0:
+            closestPairX = closestPairXaux
+            return closestPairX
+        elif closestPairXaux % 2 != 0 and bussola >= -35 and bussola <= 35:
+            closestPairX = closestPairXaux + 1
+            return closestPairX
+        elif closestPairXaux % 2 != 0 and bussola <= -155 or bussola >= 155:
+            closestPairX = closestPairXaux - 1
+            return closestPairX
+        elif closestPairYaux % 2 == 0:
+            closestPairY = closestPairYaux
+            return closestPairY
+        elif closestPairYaux % 2 != 0 and bussola >= 65 and bussola <= 115:
+            closestPairY = closestPairYaux + 1
+            return closestPairY
+        elif closestPairYaux % 2 != 0 and bussola >= -115 and bussola <= -65:
+            closestPairY = closestPairYaux - 1
+            return closestPairY
+        
+        #Testar e secalhar tb fazer como o prof fez onde metiamos um vetor e o resultado do msm são, (valorX, valorY), os valores q vamos somar/subtrai no x e no y respetivamente
+        return -1
+
+            
+
+    def run(self):
+        global last_outL, last_outR, outL, outR, lastX, lastY, lastTeta, x, y, teta, closestPairXandY, auxXInicial, auxYInicial
+        auxXInicial = 0
+        auxYInicial = 0
+        last_outL = 0
+        last_outR = 0
+        outL = 0
+        outR = 0
+        lastX = 0
+        lastY = 0
+        lastTeta = 0
+        x = 0
+        y = 0
+        teta = 0
+        closestPairXandY = 0
+        
+        if self.status != 0:
+            print("Connection refused or error")
+            quit()
+
+        state = 'stop'
+        stopped_state = 'run'
+
+        while True:
+            self.readSensors()
+
+            if self.measures.endLed:
+                print(self.rob_name + " exiting")
+                quit()
+
+            if state == 'stop' and self.measures.start:
+                state = stopped_state
+
+            if state != 'stop' and self.measures.stop:
+                stopped_state = state
+                state = 'stop'
+
+            if state == 'run':
+                if self.measures.visitingLed==True:
+                    state='wait'
+                if self.measures.ground==0:
+                    self.setVisitingLed(True);
+                self.wander()
+            elif state=='wait':
+                self.setReturningLed(True)
+                if self.measures.visitingLed==True:
+                    self.setVisitingLed(False)
+                if self.measures.returningLed==True:
+                    state='return'
+                self.driveMotors(0.0,0.0)
+            elif state=='return':
+                if self.measures.visitingLed==True:
+                    self.setVisitingLed(False)
+                if self.measures.returningLed==True:
+                    self.setReturningLed(False)
+                self.wander()
+            
+
+    def wander(self):
+        global last_outL, last_outR, outL, outR, lastX, lastY, lastTeta, x, y, teta, closestPairXandY, auxXInicial, auxYInicial
+        
+        center_id = 0
+        left_id = 1
+        right_id = 2
+        back_id = 3
+        if    self.measures.irSensor[center_id] > 5.0\
+           or self.measures.irSensor[left_id]   > 5.0\
+           or self.measures.irSensor[right_id]  > 5.0\
+           or self.measures.irSensor[back_id]   > 5.0:
+            print('Rotate left')
+            self.driveMotors(-0.1,+0.1)
+        elif self.measures.irSensor[left_id]> 2.7:
+            print('Rotate slowly right')
+            self.driveMotors(0.1,0.0)
+        elif self.measures.irSensor[right_id]> 2.7:
+            print('Rotate slowly left')
+            self.driveMotors(0.0,0.1)
+        else:
+            print('Go')
+            self.driveMotors(0.1,0.1)
+            
+        #TODO: visitar todos os vertices do grafo, um vertice so conta como sendo visitado se já não tiver mais direçoes em si msm
+        #TODO: TESTAR a funçao do calculateClosestPai, para o Y e secalhar testar da maneira do prof
+        #TODO: A parte da função para calcular o par quase q nem era preciso fazer qnd o closest par dá impar pq nas interseçoes é sempre par (talvez por causa do erro, seja preciso)
+        #TODO: Fazer a correção para a bussola, ou entao fazer a cena de qnd a bussola está por exemplo, entre -30 e 30 o valor da bussola passa para 0
+            
+        #Testar a correçao do valor de x e y
+        lineThrowRobot = self.measures.lineSensor[2:5]
+        print(self.measures.lineSensor)
+        print("Bussola->",self.measures.compass)
+        if self.measures.time == 0:
+            auxXInicial = self.measures.x
+            auxYInicial = self.measures.y
+        print("X_measures->", self.measures.x - auxXInicial)
+        print("Y_measures->", self.measures.y - auxYInicial)
+
+        #Tentativa de tentar fazer com que a linha passe no centro do robo
+        if lineThrowRobot == ['0','1','1'] and self.measures.lineSensor[:1] != ['1'] and self.measures.lineSensor[6:] !=['1']:
+            #print('Rotate slowly right')
+            self.driveMotors(0.15,0.05)
+            
+            outL, outR = self.updateDriveMotors(last_outL, 0.15, last_outR, 0.05)
+            print("(", outL, ", ", outR ,")")
+            x, y, teta = self.updateXYTeta(outR, outL, lastX, lastY, lastTeta)
+                
+            print("(", x,", ", y, ", ", (teta*180)/pi,")")
+            
+        elif lineThrowRobot == ['1','1','0'] and self.measures.lineSensor[6:] !=['1'] and self.measures.lineSensor[:1] !=['1']:
+            #print('Rotate slowly left')
+            self.driveMotors(0.05,0.15)
+            
+            outL, outR = self.updateDriveMotors(last_outL, 0.05, last_outR, 0.15)
+            print("(", outL, ", ", outR ,")")
+            x, y, teta = self.updateXYTeta(outR, outL, lastX, lastY, lastTeta)
+            
+            print("(", x,", ", y, ", ", (teta*180)/pi,")")
+
+        elif lineThrowRobot == ['1','1','1']:
+            #print("faster")
+            self.driveMotors(0.15,0.15)
+            
+            outL, outR = self.updateDriveMotors(last_outL, 0.15, last_outR, 0.15)
+            print("(", outL, ", ", outR ,")")
+            x, y, teta = self.updateXYTeta(outR, outL, lastX, lastY, lastTeta)
+            
+            print("(", x,", ", y, ", ", (teta*180)/pi,")")
+
+        elif self.measures.lineSensor == ['0','0','0','0','0','0','0'] or self.measures.lineSensor == ['1','0','0','0','0','0','0']or self.measures.lineSensor == ['0','1','0','0','0','0','0']or self.measures.lineSensor == ['0','0','1','0','0','0','0']or self.measures.lineSensor == ['0','0','0','1','0','0','0']or self.measures.lineSensor == ['0','0','0','0','1','0','0']or self.measures.lineSensor == ['0','0','0','0','0','1','0']or self.measures.lineSensor == ['0','0','0','0','0','0','1']:
+            #print('Go Back')
+            self.driveMotors(-0.15,-0.15)
+            
+            outL, outR = self.updateDriveMotors(last_outL, -0.15, last_outR, -0.15)
+            print("(", outL, ", ", outR ,")")
+            x, y, teta = self.updateXYTeta(outR, outL, lastX, lastY, lastTeta)
+            
+            print("(", x,", ", y, ", ", (teta*180)/pi,")")
+                
+        #Detetou interseção
+        
+        elif self.measures.lineSensor[:2] ==['1','1']:
+            #print('left')
+            self.driveMotors(-0.15,+0.15)
+            
+            outL, outR = self.updateDriveMotors(last_outL, -0.15, last_outR, 0.15)
+            print("(", outL, ", ", outR ,")")
+            x, y, teta = self.updateXYTeta(outR, outL, lastX, lastY, lastTeta)
+            print("ANTES DE ENTRAR NA FUNC(", x,", ", y, ")")
+            
+            #Calcular closestPair
+            closestPairXandY = self.calculateClosestPair(x, y, self.measures.compass)
+            print("closestPairXandY->", closestPairXandY) 
+            # Corrigir o X e o Y
+            if (self.measures.compass >= -35 and self.measures.compass <= 35) or (self.measures.compass <= -160 or self.measures.compass >= 160): #Horizontal, corrigir o X
+                x = self.correctXOnxPar(x, self.measures.compass, closestPairXandY)
+                lastX = x
+            elif (self.measures.compass >= 65 and self.measures.compass <= 115) or (self.measures.compass >= -115 and self.measures.compass <= -65): #Vertical, corrigir o Y
+                y = self.correctYOnyPar(y, self.measures.compass, closestPairXandY)
+                lastY = y
+            
+            print("(", x,", ", y, ", ", (teta*180)/pi,")")
+
+        elif self.measures.lineSensor[5:] ==['1','1']:
+            #print('right')
+            self.driveMotors(+0.15,-0.15)
+            outL, outR = self.updateDriveMotors(last_outL, 0.15, last_outR, -0.15)
+            print("(", outL, ", ", outR ,")")
+            x, y, teta = self.updateXYTeta(outR, outL, lastX, lastY, lastTeta) #ele corrige o X/Y mas dps por causa desta linha, volta a meter o x/y anterior, ou seja, q nao esta corrigido.
+            print("ANTES DE ENTRAR NA FUNC(", x,", ", y, ")")
+            
+            #Calcular closestPair
+            closestPairXandY = self.calculateClosestPair(x, y, self.measures.compass)
+            print("closestPairXandY->", closestPairXandY) 
+            # Corrigir o X e o Y
+            if (self.measures.compass >= -35 and self.measures.compass <= 35) or (self.measures.compass <= -160 or self.measures.compass >= 160): #Horizontal, corrigir o X
+                x = self.correctXOnxPar(x, self.measures.compass, closestPairXandY)
+                lastX = x
+            elif (self.measures.compass >= 65 and self.measures.compass <= 115) or (self.measures.compass >= -115 and self.measures.compass <= -65): #Vertical, corrigir o Y
+                y = self.correctYOnyPar(y, self.measures.compass, closestPairXandY)
+                lastY = y
+            
+            print("(", x,", ", y, ", ", (teta*180)/pi,")") 
+            
+               
+
+class Map():
+    def __init__(self, filename):
+        tree = ET.parse(filename)
+        root = tree.getroot()
+        
+        self.labMap = [[' '] * (CELLCOLS*2-1) for i in range(CELLROWS*2-1) ]
+        i=1
+        for child in root.iter('Row'):
+           line=child.attrib['Pattern']
+           row =int(child.attrib['Pos'])
+           if row % 2 == 0:  # this line defines vertical lines
+               for c in range(len(line)):
+                   if (c+1) % 3 == 0:
+                       if line[c] == '|':
+                           self.labMap[row][(c+1)//3*2-1]='|'
+                       else:
+                           None
+           else:  # this line defines horizontal lines
+               for c in range(len(line)):
+                   if c % 3 == 0:
+                       if line[c] == '-':
+                           self.labMap[row][c//3*2]='-'
+                       else:
+                           None
+               
+           i=i+1
+
+
+rob_name = "pClient1"
+host = "localhost"
+pos = 1
+mapc = None
+
+for i in range(1, len(sys.argv),2):
+    if (sys.argv[i] == "--host" or sys.argv[i] == "-h") and i != len(sys.argv) - 1:
+        host = sys.argv[i + 1]
+    elif (sys.argv[i] == "--pos" or sys.argv[i] == "-p") and i != len(sys.argv) - 1:
+        pos = int(sys.argv[i + 1])
+    elif (sys.argv[i] == "--robname" or sys.argv[i] == "-r") and i != len(sys.argv) - 1:
+        rob_name = sys.argv[i + 1]
+    elif (sys.argv[i] == "--map" or sys.argv[i] == "-m") and i != len(sys.argv) - 1:
+        mapc = Map(sys.argv[i + 1])
+    else:
+        print("Unkown argument", sys.argv[i])
+        quit()
+
+if __name__ == '__main__':
+    rob=MyRob(rob_name,pos,[0.0,60.0,-60.0,180.0],host)
+    if mapc != None:
+        rob.setMap(mapc.labMap)
+        rob.printMap()
+    
+    rob.run()
+

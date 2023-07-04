@@ -1,0 +1,9 @@
+1 nó:
+Nota- nó laranja é o nó onde é carregado o conteudo e o azul é o nó que vai querer aceder ao conteudo
+
+IPFS:
+	- Vai ser carregado no nó laranja o contéudo, que chega primeiro ao 100% na simulação e só dps é que o nó azul, que vai aceder ao conteudo, é que chega aos 100%. Como os dois nós estão muito próximos chegam ao 100% quase ao msm tempo. Se eles tivessem mais separados já se ia notar mais a diferença. Ou seja, o nó azul ia apenas começar a carregar até aos 100% quando o nó laranja já tiver a 100%, tiver com o conteudo carregado.
+
+Bittorrent:
+
+No bittorent o nó laranja fica a 0% porque o contéudo já está presente, não precisou de ser carregado (Ver nota 7.5). O resto é semelhante, os nós azuis vão carregando o conteudo proveniente do nó laranja (A percentagem vai aumentando até ao 100%)
