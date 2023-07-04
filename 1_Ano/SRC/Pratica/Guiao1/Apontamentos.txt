@@ -1,0 +1,2 @@
+Por exemplo, se fizer um ping do PC2 para o PC4, o PC2 vai enviar um request para a gateway (SWL3B) e na porta trunk (wireshark ligado!) vai aparecer o tag da vlan2 e qnd chega ao SWL3B ele vai enviar o request para o PC4 e agr na porta trunk vai aparecer com o tag da vlanID = vlan3.
+No processo de reply o processo é o mesmo. O PC4 envia um reply para o SWL3B e na porta trunk a vlanID = vlan3 e quando o pacote chega AO SWL3B o msm vai enviar o reply para PC2 e na porta trunk vai aparecer agr a tag com o valor vlanID=2.

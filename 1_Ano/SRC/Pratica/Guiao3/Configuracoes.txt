@@ -1,0 +1,4 @@
+DMZ:
+
+sudo ifconfig enp0s3 192.1.1.40/24
+sudo route add default gw 192.1.1.1

@@ -1,0 +1,60 @@
+SW L3 A 
+show vlan-switch
+
+configure terminal
+interface FastEthernet 1/15
+switchport mode trunk
+interface FastEthernet 1/14
+switchport mode trunk
+end
+write
+
+vlan database
+vlan 2
+vlan 3
+exit
+!show vlan-switch -> comando para verificar a existência de VLANS na database do switch
+
+----------
+SW L3 B
+show vlan-switch
+
+configure terminal
+interface FastEthernet 1/14
+switchport mode trunk
+exit
+ip routing
+interface vlan 1
+no autostate
+ip address 10.0.0.1 255.255.255.0
+ip ospf 1 area 0
+no shut
+interface F0/1
+ip address 10.1.1.11 255.255.255.0
+ip ospf 1 area 0
+no shut
+end
+write
+
+vlan database
+vlan 2
+vlan 3
+exit
+!show vlan-switch -> comando para verificar a existência de VLANS na database do switch
+
+config term
+interface vlan 2
+no autostate
+ip address 10.0.2.1 255.255.255.0
+ip ospf 1 area 0
+no shut
+interface vlan 3
+no autostate
+ip address 10.0.3.1 255.255.255.0
+ip ospf 1 area 0
+no shut
+end
+write
+
+
+

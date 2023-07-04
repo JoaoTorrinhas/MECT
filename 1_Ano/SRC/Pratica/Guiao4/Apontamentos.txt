@@ -1,0 +1,17 @@
+3.
+	- O ping não funciona por causa de falta de sincronização das tabelas NAT.
+	- Por exemplo, se o ping for feito do PC1 para o PC2, o ping vai para a FW2, ou seja, a tradução para os ip's nat é feita nessa Firewall. Qnd o ping chega ao pc2, o msm envia um reply que vai passar pela FW1 e, posto isto, como a tradução foi feita na FW2, é na FW2 q vai ter a tabela de traduções, então a FW1 vai rejeitar esse ping. Por isso é q não há conectividade
+
+4.
+	- Vai haver ping entre o PC1 e PC2 pq as FW1 e FW2 vão conhecer a tabela nat de cada uma das duas através da interface eth5.
+	- Aconte o msm da pergunta 3, mas desta vez a FW1 conhece a tabela nat, logo não rejeito o ping e, por sua vez, o ping é feito com sucesso
+
+5.
+	-O ping apenas funciona do PC1 para o PC2 (inside to outside) e não funciona do PC2-PC1 (outside to inside)
+
+8.
+	-Antes não estava a pingar pq as firewalls não tinham uma rota estática para o a rede do PC1 e para a rede do PC2, por isso qnd o ping chegava às firewalls ele perdia-se pq n sabia o q fazer com ele.
+	- Após metermos as rotas estáticas nas FW's, o ping ja funciona
+
+
+	

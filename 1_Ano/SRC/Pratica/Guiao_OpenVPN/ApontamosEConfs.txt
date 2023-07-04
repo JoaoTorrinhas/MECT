@@ -1,0 +1,46 @@
+2.
+	-Criamos/geramos as credenciais/certificados... no servidor, para o user, e metemos o servidor a correr
+3.
+	-Importamos as credencias/certificados no cliente para termos acesso à openvpn e conseguimos pingar para o inside com a vpn e sem a vpn ligada.
+4.
+	-Definimos a regra para só serem aceites comunicações para a DMZ com destino o port 1194 (openvpn)
+	-Definimos tb a regra para só ser possível pingar o inside se tivermos a openvpn ligada (network 10.8.0.0/24)
+	-O ping do outside para o inside com a VPN ligada, vai do outside para a DMZ, na DMZ faz a conversão para 10.8.0.0/24, e dps vai da DMZ para o INSIDE.
+	-
+	
+
+configure
+
+set zone-policy zone INSIDE description "Inside (Internal Network)"
+set zone-policy zone INSIDE interface eth2
+set zone-policy zone OUTSIDE description "Outside (Internet)"
+set zone-policy zone OUTSIDE interface eth0
+set zone-policy zone DMZ description "DMZ"
+set zone-policy zone DMZ interface eth1
+
+set firewall name FROM-OUTSIDE-TO-DMZ rule 10 action accept
+set firewall name FROM-OUTSIDE-TO-DMZ rule 10 protocol udp
+set firewall name FROM-OUTSIDE-TO-DMZ rule 10 destination port 1194
+
+!Como o ping qnd vai do inside para a dmz ainda tem como source address o 200.1.1.1, significa q é só na DMZ q o ip passa a estar na gama 10.8.0.0/24, então definimos esta regra
+set firewall name FROM-DMZ-TO-INSIDE rule 10 action accept
+set firewall name FROM-DMZ-TO-INSIDE rule 10 protocol ip
+set firewall name FROM-DMZ-TO-INSIDE rule 10 source address 10.8.0.0/24
+
+set firewall name FROM-DMZ-TO-OUTSIDE rule 10 action accept
+set firewall name FROM-DMZ-TO-OUTSIDE rule 10 state established enable
+
+set firewall name FROM-OUTSIDE-TO-INSIDE rule 10 action accept
+set firewall name FROM-OUTSIDE-TO-INSIDE rule 10 protocol ip
+set firewall name FROM-OUTSIDE-TO-INSIDE rule 10 source address 200.1.1.0/24
+
+set firewall name FROM-INSIDE-TO-OUTSIDE rule 10 action accept
+set firewall name FROM-INSIDE-TO-OUTSIDE rule 10 state established enable
+
+
+set zone-policy zone DMZ from OUTSIDE firewall name FROM-OUTSIDE-TO-DMZ
+set zone-policy zone INSIDE from OUTSIDE firewall name FROM-OUTSIDE-TO-INSIDE
+set zone-policy zone OUTSIDE from INSIDE firewall name FROM-INSIDE-TO-OUTSIDE
+set zone-policy zone OUTSIDE from DMZ firewall name FROM-DMZ-TO-OUTSIDE
+set zone-policy zone INSIDE from DMZ firewall name FROM-DMZ-TO-INSIDE
+

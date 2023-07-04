@@ -1,0 +1,19 @@
+3.
+	-O ping do PC1 para o PC2 funciona. Como o PC1 está numa rede privada, ao efetuar o ping vai ser feito uma transforamção do ip do PC1 para o ip 192.1.0.3 (está na gama definida nas configurações 192.1.0.1-192.1.0.10, a atribuição do ip é aleatória, pode ser qualquer um q esteja nessa gama).
+	-Assim o PC2 nunca vai conhecer o endereço do PC1 (que está numa rede privada)
+
+4.
+	-Definindo como zonas, os PC's já não comunicam porque estão em zonas diferentes.
+	-Só os elementos da mesma zona é que conseguem comunicar, é como se cada zona fosse uma "rede privada".
+
+5.
+	-O PC1 consegue pingar o PC2 mas o PC1 não consegue pingar o servidor	
+
+6.
+	-O PC1 (INSIDE) já consegue fazer o ping para a DMZ
+
+7.
+	-O PC2 (OUTSIDE) já consegue pingar a DMZ
+
+8.
+	-O ping do PC2 via UDP funciona mas via TCP não funciona
