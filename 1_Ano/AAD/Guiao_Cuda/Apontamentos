@@ -1,0 +1,11 @@
+helloFromGPU<<1,10>>>();
+
+O valor 10 significa o numero de blocks de threads por execuçao
+Vou lançar um bloco de threads que contem 10 threads, ou seja, vai excutar a função 10x -> printar o valor 10x
+
+identificação dentro do bloco --> threadIdx -> contem o valor de x,y,z
+identificação do bloco --> blockIdx -> contem tb o valor de x,y,z
+
+blockDim --> contem tb os valores de x,y,z
+
+gridDim --> contem tb os valores de x,y,z

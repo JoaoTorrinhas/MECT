@@ -1,0 +1,28 @@
+x0= [not(m1)*not(m2)*not(m3)*m4] + [m1*not(m2)*not(m3)*m4] + [not(m1)*m2*not(m3)*m4] + [m1*m2*not(m3)*m4] + [not(m1)*not(m2)*m3*m4] + [m1*not(m2)*m3*m4] + [not(m1)*m2*m3*m4] + [m1*m2*m3*m4] (SIMPLIFICAR) ------> m4 ou m4 + m4*not(m2)
+x1= [m1*not(m2)*not(m3)*not(m4)] + [m1*m2*not(m3)*not(m4)] + [m1*not(m2)*m3*not(m4)] + [m1*m2*m3*not(m4)] + [not(m1)*not(m2)*not(m3)*m4] + [not(m1)*m2*not(m3)*m4] + [not(m1)*not(m2)*m3*m4] + [not(m1)*m2*m3*m4] (Simplificando) ------> m1*not(m4) + not(m1)*m4 == m1 xor m4
+x2= m2 xor m4
+x3= m1 xor x2
+x4= m3 xor m4
+x5= m1 xor x4	
+x6= m2 xor x4 
+x7= m1 xor x6
+
+7 portas xor em vez de 12 portas xor
+
+
+VER pela tabela de verdade
+
+
+------------------------------------
+s7 <= m(0);
+s6 <= m(3) xor m(0);
+	s5 <= m(2) xor m(0);
+	s4 <= m(3) xor s5;
+	s3 <= m(1) xor m(0);
+	s2 <= m(3) xor s3;
+	s1 <= m(2) xor s3;
+	s0 <= m(3) xor s1;
+	o <= s7 & s6 & s5 & s4 & s3 & s2 & s1 & s0;
+	
+o -> output e o m-> message
+------------------------------------

@@ -1,0 +1,35 @@
+BT -> blocos de threads
+
+           |	GPU(t)
+-------------------------------
+
+2^21 BT (1) -> 5.26 * 10^-2
+2^20 BT (2) -> E.94 * 10^-2
+2^19 BT (4) -> 3.63 * 10^-2
+2^18 BT (8) -> 3.46 * 10^-2
+2^17 BT (16) -> 3.68 * 10^-2
+2^16 BT (32) -> 1.49 * 10^-1
+2^15 BT (64) -> 2.40 * 10^-1
+2^14 BT (128) -> 2.60 * 10^-1
+2^13 BT (256) -> 2.60 * 10^-1
+2^12 BT (512) -> 2.60 * 10^-1
+2^11 BT (1014) -> 2.69 * 10^-1
+
+-------------------------------
+
+CPU(t) -> 2.38 * 10^-1
+
+Processador -> Circuito complexo de tipo syncrhonous que varia entre dois estados, fetch e execute.
+
+Processador SAMD -> Single intruction, ou seja, tem apenas uma unidade de controlo, mas é multiple data, ou seja, a msm intrução é aplicada em conjunto de dados distintos, em simultâneo.
+
+NVIDIA -> Cada processador tem 32 elementos computacionais. Threads do msm bloco são obrigatoriamente executados no msm processador
+
+
+
+Linha 205 (sector_data[i] ^= x) tem dois acessos à memória, uma para leitura e uma para escrita. Vai ler o valor da operação e vai escrevê-lo na memória
+
+
+Projeto 2:
+5 amostras em cada ponto, valor médio e desvio padrão (serve para saber com quantos algarismos significativos vamos apresentar os resultados)
+Vamos ter de determinar a configuração ótima e explicar os resultados. Fazer um gráfico parecido ao que o diogo desenhou no caderno

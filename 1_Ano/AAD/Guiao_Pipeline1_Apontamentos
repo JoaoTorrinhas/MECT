@@ -1,0 +1,3 @@
+-> Para correr o programa DLX --->  java -jar openDLX.jar
+
+	-No ex2, o fowarding não funciona pq estamos a aceder à memória para leitura (lw), e como o fowarding é feito na fase EX e a leitura é feita no MEM, temos de fazer o forwardiing e atrasar um ciclo para a instrução seguinte. Se fizermos isso, no ciclo 8, a instrução sub faz EX no MEM do lw, por isso temos de atrasar para fazer EX no WB do lw

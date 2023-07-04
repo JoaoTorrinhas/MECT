@@ -1,0 +1,7 @@
+Variáveis do algoritmo --------> registos do banco
+
+Variáveis de duração permanente: 
+	-array (2 registos para cada elemento), numero de elementos(nelem, 1 registo)
+	-variante e invariante
+
+Variáveis de duração temporária- tmp,i,j (3 registos para cada um deles)
