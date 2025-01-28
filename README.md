@@ -1,2 +1,2 @@
 # MECT
-Repository with some notes, resolutions and tests from the MECT master's degree.
+Repository with some notes, resolutions, tests and projects from the MECT master's degree.
